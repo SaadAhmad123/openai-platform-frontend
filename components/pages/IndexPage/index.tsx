@@ -37,7 +37,7 @@ const IndexPage = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 1 }}
             >
-              Maximize your business potential with OpenAI's ChatGPT: Your data, your competitive advantage.
+              Maximize your business potential with OpenAI{"'"}s ChatGPT: Your data, your competitive advantage.
             </motion.p>
           </div>
           <Separator padding={16} />
