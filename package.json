@@ -3,18 +3,49 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
+    "css:dev": "TAILWIND_MODE=watch postcss ./styles/index.css -o ./styles/globals.css --watch",
+    "css:build": "postcss ./styles/index.css -o ./styles/globals.css",
+    "dev": "npm run css:dev & next",
+    "build": "npm run css:build & next build",
     "start": "next start",
-    "lint": "next lint"
+    "type-check": "tsc",
+    "lint": "next lint",
+    "lint-fix": "next lint --fix",
+    "prettier-fix": "npx prettier --write ."
+  },
+  "engines": {
+    "node": "18.9.0"
   },
   "dependencies": {
     "next": "13.2.4",
     "react": "18.2.0",
-    "react-dom": "18.2.0"
+    "react-dom": "18.2.0",
+    "@fortawesome/fontawesome-svg-core": "6.2.0",
+    "@fortawesome/free-brands-svg-icons": "6.2.0",
+    "@fortawesome/free-solid-svg-icons": "6.2.0",
+    "@fortawesome/react-fontawesome": "0.2.0",
+    "@next/font": "13.0.7",
+    "@silevis/reactgrid": "^4.0.4",
+    "@xstate/react": "^3.0.1",
+    "aws-sdk": "^2.1279.0",
+    "axios": "^1.2.1",
+    "dotenv": "^16.0.3",
+    "framer-motion": "^6.5.1",
+    "moment": "^2.29.4",
+    "react-modern-drawer": "^1.1.2",
+    "scheduler": "^0.23.0",
+    "typescript": "4.9.4",
+    "xstate": "^4.35.1"
   },
   "devDependencies": {
     "eslint": "8.36.0",
-    "eslint-config-next": "13.2.4"
+    "eslint-config-next": "13.2.4",
+    "autoprefixer": "^10.4.13",
+    "postcss": "^8.4.20",
+    "prettier": "2.7.1",
+    "tailwindcss": "^3.2.4",
+    "@types/node": "18.11.17",
+    "@types/react": "18.0.26",
+    "@types/react-dom": "18.0.9"
   }
 }
