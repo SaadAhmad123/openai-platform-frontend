@@ -26,8 +26,6 @@ interface InfoPanelForStackV1 {
 }
 
 const InfoPanelForStackV1 = ({ stack, IdToken }: InfoPanelForStackV1) => {
-    if (!stack) return <></>
-    if (stack?.state !== 'AVAILABLE') return <></>
     let stackContent: any = undefined
     let ingestionUrl: string = ''
     let downloadIngestionUrl: string = ''
@@ -98,6 +96,9 @@ const InfoPanelForStackV1 = ({ stack, IdToken }: InfoPanelForStackV1) => {
         )
     })
 
+    if (!stack) return <></>
+    if (stack?.state !== 'AVAILABLE') return <></>
+    if (stack?.provisioning_stack !== "stack_v1") return <></>
     return (
         <div className="grid gap-3 grid-cols-1 md:grid-cols-2">
             <InfoTile className="col-span-2">
