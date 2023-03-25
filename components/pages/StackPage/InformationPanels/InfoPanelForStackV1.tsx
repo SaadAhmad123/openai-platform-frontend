@@ -21,6 +21,7 @@ import { AuthContextType } from '../../../../AuthContext/types'
 import AuthContext from '../../../../AuthContext/Context'
 import CodeMirror from '@uiw/react-codemirror';
 import { json } from '@codemirror/lang-json';
+import { python } from '@codemirror/lang-python'
 import { xcodeDark } from "@uiw/codemirror-theme-xcode"
 
 interface InfoPanelForStackV1 {
@@ -75,6 +76,29 @@ function addWidgetToPage(socket, name, prompt_id, srcUrl = "https://open-ai-clie
 }
 addWidgetToPage("${socket}", "${name}", "${prompt_id}")
 `
+
+const ingestionCode = (ingestionUrl: string) => (
+    `import pandas as pd
+import requests
+import json
+
+url = "${ingestionUrl}"
+df = pd.read_csv('data.csv')
+
+# Get count of rows
+num_rows = len(df)
+
+for index, row in df.iterrows():
+    # Print value of "url" column for current row
+    data = {
+        'urls': [row['url']],
+        'headings': [row['page headings']],
+        'paragraph': row["paragraph"]
+    }
+    #print(json.dumps(data))
+    response = requests.post(url, json=data)
+    print(f"{index}/{num_rows}:{index/num_rows*100}% -- data synced -- {str(response.content)}")`
+)
 
 export interface IPromptEditor {
     getUrl: string,
@@ -285,34 +309,15 @@ const InfoPanelForStackV1 = ({ stack, IdToken }: InfoPanelForStackV1) => {
                     The URL provided allows you to send POST requests to submit data
                     consisting of three fields - an array of strings for URLs, an array of
                     strings for headings, and a string for the paragraph. The data will be
-                    sent in JSON format in the request body.
+                    sent in JSON format in the request body. For example,
                 </p>
                 <Separator padding={3} />
-                <CopyBlock
-                    text={`
-                    import requests
-                    import json
-
-                    url = '${ingestionUrl}'
-                    data = {
-                        'url': ['https://www.example.com', 'https://www.google.com'],
-                        'headings': ['Example website', 'Google'],
-                        'paragraph': 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.'
-                    }
-                    headers = {'Content-type': 'application/json'}
-                    response = requests.post(url, data=json.dumps(data), headers=headers)
-                    print(response.status_code)  # check the status code of the response
-                    print(response.json())  # display the response data as JSON
-                    `
-                        .trim()
-                        .split('\n')
-                        .map((item) => item.trim())
-                        .join('\n')}
-                    language={'python'}
-                    theme={dracula}
-                    codeblock
-                    showLineNumbers={true}
-                    wrapLines
+                <CodeMirror
+                    value={ingestionCode(ingestionUrl)}
+                    height="200px"
+                    extensions={[python()]}
+                    theme={xcodeDark}
+                    editable={false}
                 />
                 <Separator padding={8} />
                 <div className="flex items-center gap-4">

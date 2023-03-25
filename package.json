@@ -19,6 +19,7 @@
   "dependencies": {
     "@codemirror/lang-javascript": "^6.1.4",
     "@codemirror/lang-json": "^6.0.1",
+    "@codemirror/lang-python": "^6.1.2",
     "@emotion/react": "^11.10.6",
     "@fortawesome/fontawesome-svg-core": "6.2.0",
     "@fortawesome/free-brands-svg-icons": "6.2.0",
