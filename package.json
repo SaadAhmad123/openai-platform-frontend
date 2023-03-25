@@ -14,7 +14,7 @@
     "prettier-fix": "npx prettier --write ."
   },
   "engines": {
-    "node": "16.19.1"
+    "node": "16.19.0"
   },
   "dependencies": {
     "@emotion/react": "^11.10.6",
