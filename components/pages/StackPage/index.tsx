@@ -16,7 +16,6 @@ import safeConsole from '../../../helpers/safeConsole'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTrashAlt, faRedoAlt } from '@fortawesome/free-solid-svg-icons'
 import Spinner from '../../Spinner'
-import { CopyBlock, dracula } from 'react-code-blocks'
 import InfoTile from './InfoTile'
 import CopyButton from './CopyButton'
 import InfoPanelForStackV1 from './InformationPanels/InfoPanelForStackV1'
@@ -68,7 +67,7 @@ const StackPage = () => {
         safeConsole()?.error(e as AxiosError)
         setError(
           ((e as AxiosError)?.response?.data as any)?.message ||
-            JSON.stringify((e as AxiosError)?.response?.data),
+          JSON.stringify((e as AxiosError)?.response?.data),
         )
       } finally {
         setLoadingVersionUpdate(false)
@@ -76,6 +75,7 @@ const StackPage = () => {
     },
     deleteStack: async () => {
       try {
+        if (!confirm(`Do you want to delete the stack: ${stack?.stack?.name}?`)) return
         setError(undefined)
         setLoadingDeleteStack(true)
         await axios.delete(
@@ -92,7 +92,7 @@ const StackPage = () => {
         safeConsole()?.error(e as Error)
         setError(
           ((e as AxiosError)?.response?.data as any)?.message ||
-            JSON.stringify((e as AxiosError)?.response?.data),
+          JSON.stringify((e as AxiosError)?.response?.data),
         )
       } finally {
         setLoadingDeleteStack(false)
@@ -150,9 +150,8 @@ const StackPage = () => {
                 Status
               </p>
               <p
-                className={`font-medium text-xl ${
-                  stack?.stack?.state === 'AVAILABLE' ? 'text-green-600' : ''
-                }`}
+                className={`font-medium text-xl ${stack?.stack?.state === 'AVAILABLE' ? 'text-green-600' : ''
+                  }`}
               >
                 {stack?.stack?.state}
               </p>
@@ -184,6 +183,13 @@ const StackPage = () => {
                   .local()
                   .toString()}
               </p>
+            </InfoTile>
+            <InfoTile>
+              <p>
+                To test the links in Postman you need an API token. Copy it from down below
+              </p>
+              <Separator padding={8} />
+              <CopyButton textToCopy={auth?.IdToken || ""} />
             </InfoTile>
           </div>
           <Separator padding={10} />
@@ -218,7 +224,7 @@ const StackPage = () => {
           <InfoPanelForStackV1 stack={stack?.stack} IdToken={auth?.IdToken} />
         </>
       )}
-      <Separator padding={16} />
+      <Separator padding={32} />
     </Layout>
   )
 }

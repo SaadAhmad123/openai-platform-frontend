@@ -1,13 +1,12 @@
-import React from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import Separator from '../../../Separator'
-import moment from 'moment'
 import { HomePageActionButton } from '../../../Buttons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {
     faTrashAlt,
-    faRedoAlt,
     faPlus,
     faDownload,
+    faEdit,
 } from '@fortawesome/free-solid-svg-icons'
 import Spinner from '../../../Spinner'
 import { CopyBlock, dracula } from 'react-code-blocks'
@@ -17,13 +16,150 @@ import safeConsole from '../../../../helpers/safeConsole'
 import { StackItem } from '../../../types'
 import usePromise from '../../../../hooks/usePromise'
 import axios, { AxiosError } from 'axios'
-import { AppEnvironment } from '../../../../helpers/AppEnvironmentManager'
 import Form from '../../../utils/Form'
+import { AuthContextType } from '../../../../AuthContext/types'
+import AuthContext from '../../../../AuthContext/Context'
+import CodeMirror from '@uiw/react-codemirror';
+import { json } from '@codemirror/lang-json';
+import { xcodeDark } from "@uiw/codemirror-theme-xcode"
 
 interface InfoPanelForStackV1 {
     stack?: StackItem
     IdToken?: string
 }
+
+function addWidgetToPage(socket: string, name: string, prompt_id: string, srcUrl = "https://open-ai-client.saad-ahmad.com/dist") {
+    const rootSelectorClass = '____open_ai_client_chat_bot_saad'
+    const rootDiv = document.createElement('div')
+    rootDiv.classList.add(rootSelectorClass)
+    rootDiv.classList.add('open_ai_chat_bot_root_container')
+    rootDiv.setAttribute("socket", socket)
+    rootDiv.setAttribute("name", name)
+    rootDiv.setAttribute("prompt_type", prompt_id)
+    document.body.appendChild(rootDiv)
+
+
+    // Create a script tag and add it to the page
+    const scriptTag = document.createElement("script");
+    scriptTag.src = srcUrl + "/index.js";
+    document.body.appendChild(scriptTag);
+
+    // Create a link tag for the stylesheet and add it to the page
+    const linkTag = document.createElement("link");
+    linkTag.rel = "stylesheet";
+    linkTag.href = srcUrl + "/index.css";
+    document.head.appendChild(linkTag);
+}
+
+const widgetCode = (socket: string, name: string, prompt_id: string) => `
+function addWidgetToPage(socket, name, prompt_id, srcUrl = "https://open-ai-client.saad-ahmad.com/dist") {
+    const rootSelectorClass = '____open_ai_client_chat_bot_saad'
+    const rootDiv = document.createElement('div')
+    rootDiv.classList.add(rootSelectorClass)
+    rootDiv.classList.add('open_ai_chat_bot_root_container')
+    rootDiv.setAttribute("socket", socket)
+    rootDiv.setAttribute("name", name)
+    rootDiv.setAttribute("prompt_type", prompt_id)
+    document.body.appendChild(rootDiv)
+
+    // Create a script tag and add it to the page
+    const scriptTag = document.createElement("script");
+    scriptTag.src = srcUrl + "/index.js";
+    document.body.appendChild(scriptTag);
+
+    // Create a link tag for the stylesheet and add it to the page
+    const linkTag = document.createElement("link");
+    linkTag.rel = "stylesheet";
+    linkTag.href = srcUrl + "/index.css";
+    document.head.appendChild(linkTag);
+}
+addWidgetToPage("${socket}", "${name}", "${prompt_id}")
+`
+
+export interface IPromptEditor {
+    getUrl: string,
+    postUrl: string,
+}
+
+const PromptEditor = ({ getUrl, postUrl }: IPromptEditor) => {
+    const { auth } = useContext<AuthContextType>(AuthContext)
+    const [code, setCode] = useState<string>("")
+    const getPrompt = usePromise(async () => {
+        const resp = await axios.get(getUrl, {
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: auth?.IdToken || '',
+            },
+        })
+        if (!resp.data.prompt.length) {
+            return {
+                prompt: [
+                    {
+                        id: "default",
+                        pre_query: "",
+                        post_query: "",
+                        system: {
+                            role: "system",
+                            content: "You are a friendly chatbot"
+                        },
+                        post_chat_history: [
+                            {
+                                role: "user",
+                                content: "You are a friendly chatbot"
+                            }
+                        ],
+                        pre_chat_history: [
+                            {
+                                role: "user",
+                                content: "You are a friendly chatbot"
+                            }
+                        ]
+                    }
+                ]
+            }
+        }
+        return resp.data
+    })
+
+    const postPrompt = usePromise(async (jsonBody: string) => {
+        await axios.post(postUrl, JSON.parse(jsonBody), {
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: auth?.IdToken || '',
+            },
+        })
+    })
+
+    useEffect(() => { getPrompt.retry() }, [])
+    useEffect(() => {
+        setCode(JSON.stringify(getPrompt.data || {}, null, 2))
+    }, [getPrompt.data])
+
+    return <InfoTile className="md:col-span-2 lg:col-span-4">
+        <div className="flex items-center justify-start gap-3 text-lg ">
+            {
+                getPrompt.state === "loading" ? <Spinner tailwindBorderColor="border-orange-500" /> : <FontAwesomeIcon icon={faEdit} />
+            }
+            <h1 className='font-bold'>Prompts Editor</h1>
+        </div>
+        <Separator />
+        <CodeMirror
+            value={code}
+            height="500px"
+            extensions={[json()]}
+            theme={xcodeDark}
+            onChange={(e) => setCode(e)}
+        />
+        <Separator />
+        <HomePageActionButton text="Update" icon={
+            postPrompt?.state === "loading" ? <Spinner /> : <FontAwesomeIcon icon={faPlus} />
+        }
+            onClick={() => { postPrompt.retry(code) }}
+        />
+    </InfoTile>
+}
+
+
 
 const InfoPanelForStackV1 = ({ stack, IdToken }: InfoPanelForStackV1) => {
     let stackContent: any = undefined
@@ -32,25 +168,35 @@ const InfoPanelForStackV1 = ({ stack, IdToken }: InfoPanelForStackV1) => {
     let deleteIngestedUrl: string = ''
     let updateOpenAIKeyUrl: string = ''
     let clientWebSocketUrl: string = ''
+    let clientWebAppLink: string = ''
+    let promptGetUrl: string = ''
+    let promptPostUrl: string = ''
+
     try {
         const _stackContent = JSON.parse(stack?.stack_content || '{}')
         stackContent = _stackContent.content
         ingestionUrl = stackContent?.find(
-            (item: any) => item.ExportName === 'ingest--post-noauth',
+            (item: any) => item.ExportName === `${stack?.stack_uuid}-ingest--post-noauth`,
         )?.OutputValue
         deleteIngestedUrl = stackContent?.find(
-            (item: any) => item.ExportName === 'ingest--delete-auth',
+            (item: any) => item.ExportName === `${stack?.stack_uuid}-ingest--delete-auth`,
         )?.OutputValue
         updateOpenAIKeyUrl = stackContent?.find(
-            (item: any) => item.ExportName === 'open-ai-key-update--post-auth',
+            (item: any) => item.ExportName === `${stack?.stack_uuid}-open-ai-key-update--post-auth`,
         )?.OutputValue
         clientWebSocketUrl = stackContent?.find(
-            (item: any) => item.ExportName === 'websocket-noauth',
+            (item: any) => item.ExportName === `${stack?.stack_uuid}-websocket-noauth`,
         )?.OutputValue
         downloadIngestionUrl = stackContent?.find(
-            (item: any) => item.ExportName === "ingest--get-auth",
+            (item: any) => item.ExportName === `${stack?.stack_uuid}-ingest--get-auth`,
         )?.OutputValue
-
+        promptGetUrl = stackContent?.find(
+            (item: any) => item.ExportName === `${stack?.stack_uuid}-prompt--get-auth`,
+        )?.OutputValue
+        promptPostUrl = stackContent?.find(
+            (item: any) => item.ExportName === `${stack?.stack_uuid}-prompt--post-auth`,
+        )?.OutputValue
+        clientWebAppLink = `https://mgpt-client.saad-ahmad.com/?socket=${clientWebSocketUrl}&name=${stack?.name || "unknown"}&prompt_type=default`
     } catch (e) {
         safeConsole()?.error(e)
     }
@@ -100,8 +246,31 @@ const InfoPanelForStackV1 = ({ stack, IdToken }: InfoPanelForStackV1) => {
     if (stack?.state !== 'AVAILABLE') return <></>
     if (stack?.provisioning_stack !== "stack_v1") return <></>
     return (
-        <div className="grid gap-3 grid-cols-1 md:grid-cols-2">
-            <InfoTile className="col-span-2">
+        <div className="grid gap-3 grid-cols-1 md:grid-cols-2 lg:grid-cols-4">
+            <InfoTile>
+                <p>
+                    Accelerate your experimentation! Try your <strong>{stack?.name} GPT</strong> instantly with our client app.
+                </p>
+                <Separator padding={8} />
+                <a href={clientWebAppLink} target={"_blank"}>
+                    <HomePageActionButton text={`Try ${stack?.name} GPT now!`} />
+                </a>
+            </InfoTile>
+            <InfoTile>
+                <p>
+                    Try <strong>{stack?.name} GPT</strong> instantly with our embeddable chatbot app.
+                </p>
+                <Separator padding={8} />
+                <HomePageActionButton text={`Try ${stack?.name} GPT chatbot!`} onClick={() => addWidgetToPage(clientWebSocketUrl, stack?.name || "", "default")} />
+            </InfoTile>
+            <InfoTile>
+                <p>
+                    Try <strong>{stack?.name} GPT</strong> embeddable chatbot in your code. Paste it in your code/ console.
+                </p>
+                <Separator padding={8} />
+                <CopyButton textToCopy={widgetCode(clientWebSocketUrl, stack?.name || "", "default")} />
+            </InfoTile>
+            <InfoTile className="md:col-span-2 lg:col-span-4">
                 <p className="text-sm text-gray-600 dark:text-gray-300 mb-1">
                     Ingestion URL
                 </p>
@@ -183,7 +352,7 @@ const InfoPanelForStackV1 = ({ stack, IdToken }: InfoPanelForStackV1) => {
 
                 <Separator padding={4} />
             </InfoTile>
-            <InfoTile>
+            <InfoTile className="lg:col-span-2">
                 {updateOpenAiKey.error?.message && (
                     <>
                         <h1 className="text-lg bg-red-600 text-white px-4 py-2">
@@ -218,7 +387,7 @@ const InfoPanelForStackV1 = ({ stack, IdToken }: InfoPanelForStackV1) => {
                     )}
                 />
             </InfoTile>
-            <InfoTile>
+            <InfoTile className="lg:col-span-2">
                 <p className="text-sm text-gray-600 dark:text-gray-300 mb-1">
                     Client Websocket Url
                 </p>
@@ -233,6 +402,7 @@ const InfoPanelForStackV1 = ({ stack, IdToken }: InfoPanelForStackV1) => {
                     Use this websocket urls to interact with ChatGPT integration
                 </p>
             </InfoTile>
+            <PromptEditor getUrl={promptGetUrl} postUrl={promptPostUrl} />
         </div>
     )
 }
