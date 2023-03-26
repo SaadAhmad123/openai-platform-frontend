@@ -19,6 +19,7 @@ import Spinner from '../../Spinner'
 import InfoTile from './InfoTile'
 import CopyButton from './CopyButton'
 import InfoPanelForStackV1 from './InformationPanels/InfoPanelForStackV1'
+import InfoPanelForStackV1Pro from './InformationPanels/InfoPanelForStackV1Pro'
 
 const StackPage = () => {
   const { auth } = useContext<AuthContextType>(AuthContext)
@@ -222,6 +223,7 @@ const StackPage = () => {
           </div>
           <Separator padding={10} />
           <InfoPanelForStackV1 stack={stack?.stack} IdToken={auth?.IdToken} />
+          <InfoPanelForStackV1Pro stack={stack?.stack} IdToken={auth?.IdToken} />
         </>
       )}
       <Separator padding={32} />

@@ -7,6 +7,7 @@ import {
     faPlus,
     faDownload,
     faEdit,
+    faRedoAlt,
 } from '@fortawesome/free-solid-svg-icons'
 import Spinner from '../../../Spinner'
 import InfoTile from '../InfoTile'
@@ -184,7 +185,7 @@ const PromptEditor = ({ getUrl, postUrl }: IPromptEditor) => {
 
 
 
-const InfoPanelForStackV1 = ({ stack, IdToken }: InfoPanelForStackV1) => {
+const InfoPanelForStackV1Pro = ({ stack, IdToken }: InfoPanelForStackV1) => {
     let stackContent: any = undefined
     let ingestionUrl: string = ''
     let downloadIngestionUrl: string = ''
@@ -194,6 +195,7 @@ const InfoPanelForStackV1 = ({ stack, IdToken }: InfoPanelForStackV1) => {
     let clientWebAppLink: string = ''
     let promptGetUrl: string = ''
     let promptPostUrl: string = ''
+    let createIndexGetUrl: string = ''
 
     try {
         const _stackContent = JSON.parse(stack?.stack_content || '{}')
@@ -218,6 +220,9 @@ const InfoPanelForStackV1 = ({ stack, IdToken }: InfoPanelForStackV1) => {
         )?.OutputValue
         promptPostUrl = stackContent?.find(
             (item: any) => item.ExportName === `${stack?.stack_uuid}-prompt--post-auth`,
+        )?.OutputValue
+        createIndexGetUrl = stackContent?.find(
+            (item: any) => item.ExportName === `${stack?.stack_uuid}-create-index--get-auth`,
         )?.OutputValue
         clientWebAppLink = `https://mgpt-client.saad-ahmad.com/?socket=${clientWebSocketUrl}&name=${stack?.name || "unknown"}&prompt_type=default`
     } catch (e) {
@@ -265,9 +270,21 @@ const InfoPanelForStackV1 = ({ stack, IdToken }: InfoPanelForStackV1) => {
         )
     })
 
+    const createIndex = usePromise(async () => {
+        return await axios.get(
+            createIndexGetUrl,
+            {
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: IdToken || '',
+                },
+            }
+        )
+    })
+
     if (!stack) return <></>
     if (stack?.state !== 'AVAILABLE') return <></>
-    if (stack?.provisioning_stack !== "stack_v1") return <></>
+    if (stack?.provisioning_stack !== "stack_v1_pro") return <></>
     return (
         <div className="grid gap-3 grid-cols-1 md:grid-cols-2 lg:grid-cols-4">
             <InfoTile>
@@ -292,6 +309,19 @@ const InfoPanelForStackV1 = ({ stack, IdToken }: InfoPanelForStackV1) => {
                 </p>
                 <Separator padding={8} />
                 <CopyButton textToCopy={widgetCode(clientWebSocketUrl, stack?.name || "", "default")} />
+            </InfoTile>
+            <InfoTile>
+                <p>
+                    Manually initiate Index creation. Otherwise, it will be triggered ever 6 hours.
+                </p>
+                <Separator padding={8} />
+                <HomePageActionButton
+                    text={createIndex.error?.message || `Create Index`}
+                    onClick={() => createIndex.retry()}
+                    icon={
+                        createIndex.state === "loading" ? <Spinner /> : <FontAwesomeIcon icon={faRedoAlt} />
+                    }
+                />
             </InfoTile>
             <InfoTile className="md:col-span-2 lg:col-span-4">
                 <p className="text-sm text-gray-600 dark:text-gray-300 mb-1">
@@ -319,18 +349,18 @@ const InfoPanelForStackV1 = ({ stack, IdToken }: InfoPanelForStackV1) => {
                     editable={false}
                 />
                 <Separator padding={8} />
-                <div className="flex items-center gap-4">
+                <div className="flex items-center gap-4 flex-wrap">
                     <HomePageActionButton
                         onClick={() => {
                             if (
                                 !window.confirm(
-                                    `Are you sure you want to delete the ingested data`,
+                                    `Are you sure you want to delete the ingested data index`,
                                 )
                             )
                                 return
                             deleteIngestedData.retry()
                         }}
-                        text={deleteIngestedData?.error?.message || 'Delete'}
+                        text={deleteIngestedData?.error?.message || 'Delete Index'}
                         icon={
                             deleteIngestedData.state === 'loading' ? (
                                 <Spinner />
@@ -343,7 +373,7 @@ const InfoPanelForStackV1 = ({ stack, IdToken }: InfoPanelForStackV1) => {
                         onClick={() => {
                             handleIngestedDataDownload.retry()
                         }}
-                        text={handleIngestedDataDownload?.error?.message || 'Download'}
+                        text={handleIngestedDataDownload?.error?.message || 'Download Index'}
                         icon={
                             handleIngestedDataDownload.state === 'loading' ? (
                                 <Spinner />
@@ -411,4 +441,4 @@ const InfoPanelForStackV1 = ({ stack, IdToken }: InfoPanelForStackV1) => {
     )
 }
 
-export default InfoPanelForStackV1
+export default InfoPanelForStackV1Pro
