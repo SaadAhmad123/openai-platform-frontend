@@ -15,7 +15,7 @@ import ForgotPasswordNewPasswordBox from './ForgotPasswordNewPasswordBox'
 import useKeyboardControl from '../../../../hooks/useKeyboardControl'
 
 const LogInPage = () => {
-  const { } = useLocalStorage<{
+  const {} = useLocalStorage<{
     cognitoId: string
     accessToken: string
     idToken: string

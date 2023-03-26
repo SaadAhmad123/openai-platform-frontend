@@ -22,7 +22,8 @@ const IndexPage = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 1 }}
             >
-              Unleash the power of<span className="text-red-500"> your data</span> and
+              Unleash the power of
+              <span className="text-red-500"> your data</span> and
               <br className="hidden md:inline-block" />
               gain a competitive edge
               <br className="hidden md:inline-block" />
@@ -37,7 +38,8 @@ const IndexPage = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 1 }}
             >
-              Maximize your business potential with OpenAI's ChatGPT: Your data, your competitive advantage.
+              Maximize your business potential with OpenAI{"'"}s ChatGPT: Your
+              data, your competitive advantage.
             </motion.p>
           </div>
           <Separator padding={16} />

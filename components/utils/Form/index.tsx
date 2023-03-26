@@ -1,12 +1,14 @@
 import React, { useCallback, useEffect, useState } from 'react'
 import Input from './Input'
 import Separator from '../../Separator'
+import Select, { OnChangeValue } from 'react-select'
 
 export type FormInputItem = {
   label: string
   type: string
   key: string
   isRequired?: boolean
+  list?: { value: string; label: string }[]
 }
 
 type FormProps = {
@@ -46,16 +48,38 @@ const Form = ({
   return (
     <form onSubmit={_handleSubmit}>
       {inputs.map((input) => (
-        <Input
-          key={input.key}
-          label={input.label}
-          type={input.type}
-          value={values[input.key]}
-          onChange={(
-            event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
-          ) => handleInputChange(input.key, event.target.value)}
-          isRequired={input.isRequired}
-        />
+        <React.Fragment key={input.key + '-input'}>
+          {input.type === 'select' && (
+            <React.Fragment>
+              <label
+                htmlFor={input.label}
+                className="block font-medium text-gray-700 dark:text-servian-white mb-2"
+              >
+                {input.label}
+              </label>
+              <Select
+                required={input.isRequired}
+                options={input.list || []}
+                onChange={(newValue) => {
+                  handleInputChange(input.key, newValue?.value || '')
+                }}
+              />
+            </React.Fragment>
+          )}
+          {input.type !== 'select' && (
+            <Input
+              label={input.label}
+              type={input.type}
+              value={values[input.key]}
+              onChange={(
+                event: React.ChangeEvent<
+                  HTMLInputElement | HTMLTextAreaElement
+                >,
+              ) => handleInputChange(input.key, event.target.value)}
+              isRequired={input.isRequired}
+            />
+          )}
+        </React.Fragment>
       ))}
       <Separator padding={8} />
       <div className="flex items-center justify-center">

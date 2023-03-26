@@ -94,7 +94,6 @@ const useAuth = ({
         },
       } as InitiateAuthRequest
       const data = await cognitoClient()?.initiateAuth(authParams).promise()
-      console.log(data)
       if (data?.AuthenticationResult) {
         return {
           ...data.AuthenticationResult,
@@ -259,7 +258,6 @@ const useAuth = ({
     if (!(auth as AuthResponse)?.AccessToken) {
       throw new Error('No Access Token')
     }
-    console.log((auth as AuthResponse)?.IdToken)
     return await cognitoClient()
       ?.getUser({
         AccessToken: (auth as AuthResponse).AccessToken || '',
