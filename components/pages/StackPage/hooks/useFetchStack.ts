@@ -12,6 +12,7 @@ export default function useFetchStack(stack_uuid: string, IdToken: string) {
 
   const fetch = async () => {
     try {
+      setQueryState("loading")
       const resp = await axios.get(
         AppEnvironment.makeRestUrl(`/stack/${stack_uuid}`),
         {
@@ -32,9 +33,30 @@ export default function useFetchStack(stack_uuid: string, IdToken: string) {
     }
   }
 
+  const backgroundFetch = async () => {
+    try {
+      const resp = await axios.get(
+        AppEnvironment.makeRestUrl(`/stack/${stack_uuid}`),
+        {
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: IdToken,
+          },
+        },
+      )
+      if (!resp?.data) {
+        throw new Error('No stack')
+      }
+      setStack(resp?.data as StackItem)
+    } catch (e) {
+      safeConsole()?.error(e as Error)
+    }
+  }
+
   return {
     fetch,
     stack,
     queryState,
+    backgroundFetch,
   }
 }

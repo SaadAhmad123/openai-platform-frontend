@@ -20,6 +20,7 @@ import InfoTile from './InfoTile'
 import CopyButton from './CopyButton'
 import InfoPanelForStackV1 from './InformationPanels/InfoPanelForStackV1'
 import InfoPanelForStackV1Pro from './InformationPanels/InfoPanelForStackV1Pro'
+import usePromise from '../../../hooks/usePromise'
 
 const StackPage = () => {
   const { auth } = useContext<AuthContextType>(AuthContext)
@@ -37,6 +38,11 @@ const StackPage = () => {
     stackInfraList.query()
   }, [])
 
+
+  const refreshStackInfo = usePromise(async () => {
+    await stack.backgroundFetch()
+  })
+
   useEffect(() => {
     if (!stackInfraList?.stackList?.length) return
     if (!stack?.stack) return
@@ -44,7 +50,8 @@ const StackPage = () => {
       (item) => item.stack_name === stack.stack?.provisioning_stack,
     )
     setEnableVersionUpdate(
-      item?.version !== stack.stack.provisioning_stack_version,
+      item?.version !== stack.stack.provisioning_stack_version ||
+      stack.stack.state?.includes("ERROR")
     )
   }, [stackInfraList.stackList, stack.stack])
 
@@ -112,6 +119,11 @@ const StackPage = () => {
   return (
     <Layout navbar={<Navbar />}>
       <Separator padding={10} />
+      <div className="flex items-center justify-end gap-4">
+        <p className="text-sm">Click here to refresh</p>
+        <HomePageActionButton text={refreshStackInfo.state === "loading" ? "Refreshing" : "Refresh"} icon={refreshStackInfo.state === "loading" ? <Spinner /> : <FontAwesomeIcon icon={faRedoAlt} />} onClick={() => refreshStackInfo.retry()} />
+      </div>
+      <Separator />
       <h1 className="text-lg border dark:border dark:border-gray-700 dark:bg-[#1B1E1F] bg-white px-4 py-2">
         Stack Panel
       </h1>
@@ -156,6 +168,14 @@ const StackPage = () => {
               >
                 {stack?.stack?.state}
               </p>
+              {stack?.stack?.state === "PROVISIONING" ? <>
+                <Separator />
+                <p>It take 5min on average to provision</p>
+              </> : <></>}
+              {stack?.stack?.state?.includes("ERROR") ? <>
+                <Separator />
+                <p>Oops, please retry by clicking the button "Redeploy"</p>
+              </> : <></>}
             </InfoTile>
             <InfoTile>
               <p className="text-sm text-gray-600 dark:text-gray-300 mb-1">
@@ -171,7 +191,7 @@ const StackPage = () => {
                 {moment
                   .utc(stack?.stack?.created_at || '')
                   .local()
-                  .toString()}
+                  .format("MMMM DD, YYYY @ hh:mm:ss A")}
               </p>
             </InfoTile>
             <InfoTile>
@@ -182,7 +202,7 @@ const StackPage = () => {
                 {moment
                   .utc(stack?.stack?.updated_at || '')
                   .local()
-                  .toString()}
+                  .format("MMMM DD, YYYY @ hh:mm:ss A")}
               </p>
             </InfoTile>
             <InfoTile>
@@ -197,7 +217,9 @@ const StackPage = () => {
           <div className="flex gap-3 flex-wrap">
             {enableVersionUpdate && (
               <HomePageActionButton
-                text="Update Version"
+                text={stackInfraList?.stackList.find(
+                  (item) => item.stack_name === stack.stack?.provisioning_stack,
+                )?.version !== stack.stack.provisioning_stack_version ? "Update Version" : "Redeploy"}
                 icon={
                   loadingVersionUpdate ? (
                     <Spinner />
