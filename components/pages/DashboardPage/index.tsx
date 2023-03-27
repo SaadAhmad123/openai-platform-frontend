@@ -54,7 +54,6 @@ const DashboardPage = () => {
     fetchUserStackList.query()
   }, [])
 
-
   const userStackListRefresh = usePromise(async () => {
     await fetchUserStackList.backgroundFetch()
   })
@@ -67,10 +66,25 @@ const DashboardPage = () => {
           <>
             <div className="flex items-center justify-end gap-4">
               <p className="text-sm">Click here to refresh</p>
-              <HomePageActionButton text={userStackListRefresh.state === "loading" ? "Refreshing" : "Refresh"} icon={userStackListRefresh.state === "loading" ? <Spinner /> : <FontAwesomeIcon icon={faRedoAlt} />} onClick={() => userStackListRefresh.retry()} />
+              <HomePageActionButton
+                text={
+                  userStackListRefresh.state === 'loading'
+                    ? 'Refreshing'
+                    : 'Refresh'
+                }
+                icon={
+                  userStackListRefresh.state === 'loading' ? (
+                    <Spinner />
+                  ) : (
+                    <FontAwesomeIcon icon={faRedoAlt} />
+                  )
+                }
+                onClick={() => userStackListRefresh.retry()}
+              />
             </div>
-            <Separator />
-            A <strong>Stack</strong> refers to a self-contained entity that provides the capability to intake data and facilitate seamless integration with <strong>ChatGPT</strong>.
+            <Separator />A <strong>Stack</strong> refers to a self-contained
+            entity that provides the capability to intake data and facilitate
+            seamless integration with <strong>ChatGPT</strong>.
             <Separator />
             <Separator />
             <div className="flex gap-4 flex-wrap">
@@ -83,8 +97,10 @@ const DashboardPage = () => {
                     </p>
                     <h3 className="font-medium text-xl">{item.name}</h3>
                     <Separator />
-                    <div className='flex'>
-                      <p className="bg-servian-orange text-sm px-2 py-1 text-white">{item?.state}</p>
+                    <div className="flex">
+                      <p className="bg-servian-orange text-sm px-2 py-1 text-white">
+                        {item?.state}
+                      </p>
                     </div>
                     <Separator padding={8} />
                     <h3 className="text-gray-500 hidden sm:block">
@@ -95,7 +111,6 @@ const DashboardPage = () => {
                       {(item.description || '').slice(0, 50)}
                       {(item.description || '').length > 50 && '...'}
                     </h3>
-
                   </StackTileContainer>
                 </Link>
               ))}

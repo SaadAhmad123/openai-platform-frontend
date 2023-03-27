@@ -12,7 +12,7 @@ export default function useFetchStack(stack_uuid: string, IdToken: string) {
 
   const fetch = async () => {
     try {
-      setQueryState("loading")
+      setQueryState('loading')
       const resp = await axios.get(
         AppEnvironment.makeRestUrl(`/stack/${stack_uuid}`),
         {
