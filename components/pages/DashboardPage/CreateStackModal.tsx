@@ -36,8 +36,8 @@ const CreateStackModal = ({ show, onToggle, onSubmit }: ICreateStackModal) => {
       setError(
         // @ts-ignore
         (e as AxiosError)?.response?.data?.error?.error ||
-          (e as Error)?.message ||
-          'Error occurred',
+        (e as Error)?.message ||
+        'Error occurred',
       )
     }
   }
@@ -52,6 +52,7 @@ const CreateStackModal = ({ show, onToggle, onSubmit }: ICreateStackModal) => {
       list: stackList.map((item) => ({
         label: `${item.stack_name} (${item.version})`,
         value: item.stack_name,
+        description: item.description,
       })),
     },
   ].map((item) => ({ isRequired: true, ...item }))
@@ -70,6 +71,8 @@ const CreateStackModal = ({ show, onToggle, onSubmit }: ICreateStackModal) => {
         onClick={onToggle}
       />
       <Separator padding={16} />
+      <p className='max-w-[400px]'>The key benefit of utilizing a Stack lies in its ability to <strong>ensure complete separation</strong> and <strong>control over data ownership</strong>.</p>
+      <Separator padding={8} />
       <h1 className="text-2xl sm:text-4xl font-bold dark:text-servian-white">
         Create New Stack
       </h1>
