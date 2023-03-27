@@ -8,7 +8,7 @@ export type FormInputItem = {
   type: string
   key: string
   isRequired?: boolean
-  list?: { value: string; label: string, description?: string }[]
+  list?: { value: string; label: string; description?: string }[]
 }
 
 type FormProps = {
@@ -65,7 +65,10 @@ const Form = ({
                 }}
               />
 
-              <p className='mt-2'>{input.list?.find(item => item.value === values[input.key])?.description || ""}</p>
+              <p className="mt-2">
+                {input.list?.find((item) => item.value === values[input.key])
+                  ?.description || ''}
+              </p>
             </React.Fragment>
           )}
           {input.type !== 'select' && (
