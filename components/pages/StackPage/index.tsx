@@ -174,7 +174,7 @@ const StackPage = () => {
               </> : <></>}
               {stack?.stack?.state?.includes("ERROR") ? <>
                 <Separator />
-                <p>Oops, please retry by clicking the button "Redeploy"</p>
+                <p>Oops, please retry by clicking the button {'"'}Redeploy{'"'}</p>
               </> : <></>}
             </InfoTile>
             <InfoTile>
