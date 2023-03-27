@@ -21,6 +21,8 @@ import CopyButton from './CopyButton'
 import InfoPanelForStackV1 from './InformationPanels/InfoPanelForStackV1'
 import InfoPanelForStackV1Pro from './InformationPanels/InfoPanelForStackV1Pro'
 import usePromise from '../../../hooks/usePromise'
+import SecretCreatorPanel from './SecretCreatorPanel'
+import InfoPanelForStackX1 from './InformationPanels/InfoPanelForStackX1'
 
 const StackPage = () => {
   const { auth } = useContext<AuthContextType>(AuthContext)
@@ -38,7 +40,6 @@ const StackPage = () => {
     stackInfraList.query()
   }, [])
 
-
   const refreshStackInfo = usePromise(async () => {
     await stack.backgroundFetch()
   })
@@ -51,7 +52,7 @@ const StackPage = () => {
     )
     setEnableVersionUpdate(
       item?.version !== stack.stack.provisioning_stack_version ||
-      stack.stack.state?.includes("ERROR")
+      stack.stack.state?.includes('ERROR'),
     )
   }, [stackInfraList.stackList, stack.stack])
 
@@ -83,7 +84,8 @@ const StackPage = () => {
     },
     deleteStack: async () => {
       try {
-        if (!confirm(`Do you want to delete the stack: ${stack?.stack?.name}?`)) return
+        if (!confirm(`Do you want to delete the stack: ${stack?.stack?.name}?`))
+          return
         setError(undefined)
         setLoadingDeleteStack(true)
         await axios.delete(
@@ -121,7 +123,17 @@ const StackPage = () => {
       <Separator padding={10} />
       <div className="flex items-center justify-end gap-4">
         <p className="text-sm">Click here to refresh</p>
-        <HomePageActionButton text={refreshStackInfo.state === "loading" ? "Refreshing" : "Refresh"} icon={refreshStackInfo.state === "loading" ? <Spinner /> : <FontAwesomeIcon icon={faRedoAlt} />} onClick={() => refreshStackInfo.retry()} />
+        <HomePageActionButton
+          text={refreshStackInfo.state === 'loading' ? 'Refreshing' : 'Refresh'}
+          icon={
+            refreshStackInfo.state === 'loading' ? (
+              <Spinner />
+            ) : (
+              <FontAwesomeIcon icon={faRedoAlt} />
+            )
+          }
+          onClick={() => refreshStackInfo.retry()}
+        />
       </div>
       <Separator />
       <h1 className="text-lg border dark:border dark:border-gray-700 dark:bg-[#1B1E1F] bg-white px-4 py-2">
@@ -168,14 +180,24 @@ const StackPage = () => {
               >
                 {stack?.stack?.state}
               </p>
-              {stack?.stack?.state === "PROVISIONING" ? <>
-                <Separator />
-                <p>It take 5min on average to provision</p>
-              </> : <></>}
-              {stack?.stack?.state?.includes("ERROR") ? <>
-                <Separator />
-                <p>Oops, please retry by clicking the button {'"'}Redeploy{'"'}</p>
-              </> : <></>}
+              {stack?.stack?.state === 'PROVISIONING' ? (
+                <>
+                  <Separator />
+                  <p>It take 5min on average to provision</p>
+                </>
+              ) : (
+                <></>
+              )}
+              {stack?.stack?.state?.includes('ERROR') ? (
+                <>
+                  <Separator />
+                  <p>
+                    Oops, please retry by clicking the button {'"'}Redeploy{'"'}
+                  </p>
+                </>
+              ) : (
+                <></>
+              )}
             </InfoTile>
             <InfoTile>
               <p className="text-sm text-gray-600 dark:text-gray-300 mb-1">
@@ -191,7 +213,7 @@ const StackPage = () => {
                 {moment
                   .utc(stack?.stack?.created_at || '')
                   .local()
-                  .format("MMMM DD, YYYY @ hh:mm:ss A")}
+                  .format('MMMM DD, YYYY @ hh:mm:ss A')}
               </p>
             </InfoTile>
             <InfoTile>
@@ -202,24 +224,30 @@ const StackPage = () => {
                 {moment
                   .utc(stack?.stack?.updated_at || '')
                   .local()
-                  .format("MMMM DD, YYYY @ hh:mm:ss A")}
+                  .format('MMMM DD, YYYY @ hh:mm:ss A')}
               </p>
             </InfoTile>
             <InfoTile>
               <p>
-                To test the links in Postman you need an API token. Copy it from down below
+                To test the links in Postman you need an API token. Copy it from
+                down below
               </p>
               <Separator padding={8} />
-              <CopyButton textToCopy={auth?.IdToken || ""} />
+              <CopyButton textToCopy={auth?.IdToken || ''} />
             </InfoTile>
           </div>
           <Separator padding={10} />
           <div className="flex gap-3 flex-wrap">
             {enableVersionUpdate && (
               <HomePageActionButton
-                text={stackInfraList?.stackList.find(
-                  (item) => item.stack_name === stack.stack?.provisioning_stack,
-                )?.version !== stack.stack.provisioning_stack_version ? "Update Version" : "Redeploy"}
+                text={
+                  stackInfraList?.stackList.find(
+                    (item) =>
+                      item.stack_name === stack.stack?.provisioning_stack,
+                  )?.version !== stack.stack.provisioning_stack_version
+                    ? 'Update Version'
+                    : 'Redeploy'
+                }
                 icon={
                   loadingVersionUpdate ? (
                     <Spinner />
@@ -244,8 +272,14 @@ const StackPage = () => {
             />
           </div>
           <Separator padding={10} />
+          <SecretCreatorPanel stack={stack?.stack} />
+          <Separator padding={10} />
+          <InfoPanelForStackX1 stack={stack?.stack} IdToken={auth?.IdToken} />
           <InfoPanelForStackV1 stack={stack?.stack} IdToken={auth?.IdToken} />
-          <InfoPanelForStackV1Pro stack={stack?.stack} IdToken={auth?.IdToken} />
+          <InfoPanelForStackV1Pro
+            stack={stack?.stack}
+            IdToken={auth?.IdToken}
+          />
         </>
       )}
       <Separator padding={32} />
