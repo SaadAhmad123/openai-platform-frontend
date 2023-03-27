@@ -14,7 +14,7 @@ const Layout = ({ children, title, navbar, noContainer }: ILayout) => {
   return (
     <>
       <Head>
-        <title>{title || `Open AI Platform`}</title>
+        <title>{title || `MakeGPT`}</title>
       </Head>
       <div className="min-h-screen bg-servian-white dark:bg-servian-black text-servian-black dark:text-servian-white">
         {navbar}
