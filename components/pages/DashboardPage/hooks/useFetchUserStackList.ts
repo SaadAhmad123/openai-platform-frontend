@@ -2,6 +2,7 @@ import axios from 'axios'
 import { useState } from 'react'
 import { AppEnvironment } from '../../../../helpers/AppEnvironmentManager'
 import safeConsole from '../../../../helpers/safeConsole'
+import usePromise from '../../../../hooks/usePromise'
 import { StackItem } from '../../../types'
 
 type QueryState = 'loading' | 'idle' | 'error'
@@ -31,9 +32,28 @@ export default function useFetchUserStackList(IdToken: string) {
     }
   }
 
+  const backgroundFetch = async () => {
+    try {
+      const resp = await axios.get(
+        AppEnvironment.makeRestUrl('/stack?limit=100'),
+        {
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: IdToken,
+          },
+        },
+      )
+      setStackList(resp?.data?.stacks || [])
+      return resp?.data?.stacks || []
+    } catch (e) {
+      safeConsole()?.error(e)
+    }
+  }
+
   return {
     queryState,
     stackList,
     query,
+    backgroundFetch,
   }
 }
