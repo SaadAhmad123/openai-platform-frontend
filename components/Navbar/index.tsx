@@ -72,7 +72,7 @@ const Navbar = ({ title, options }: INavbar) => {
                 className="font-bold sm:text-xl m-0 p-0 cursor-pointer"
                 onClick={() => router.push('/')}
               >
-                [Make] GPT
+                MakeGPT
               </h1>
             )}
           </div>
