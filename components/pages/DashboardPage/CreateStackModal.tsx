@@ -71,7 +71,7 @@ const CreateStackModal = ({ show, onToggle, onSubmit }: ICreateStackModal) => {
         onClick={onToggle}
       />
       <Separator padding={16} />
-      <p className="max-w-[400px]">
+      <p className="max-w-[400px] text-gray-600 dark:text-gray-100">
         The key benefit of utilizing a Stack lies in its ability to{' '}
         <strong>ensure complete separation</strong> and{' '}
         <strong>control over data ownership</strong>.

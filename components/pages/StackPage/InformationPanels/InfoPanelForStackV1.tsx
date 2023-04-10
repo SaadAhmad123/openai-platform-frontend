@@ -23,7 +23,7 @@ import { json } from '@codemirror/lang-json'
 import { python } from '@codemirror/lang-python'
 import { xcodeDark } from '@uiw/codemirror-theme-xcode'
 
-interface InfoPanelForStackV1 {
+interface IInfoPanelForStackV1 {
   stack?: StackItem
   IdToken?: string
 }
@@ -199,7 +199,7 @@ const PromptEditor = ({ getUrl, postUrl }: IPromptEditor) => {
   )
 }
 
-const InfoPanelForStackV1 = ({ stack, IdToken }: InfoPanelForStackV1) => {
+const InfoPanelForStackV1 = ({ stack, IdToken }: IInfoPanelForStackV1) => {
   let stackContent: any = undefined
   let ingestionUrl: string = ''
   let downloadIngestionUrl: string = ''

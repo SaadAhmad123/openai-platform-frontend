@@ -23,6 +23,7 @@ import InfoPanelForStackV1Pro from './InformationPanels/InfoPanelForStackV1Pro'
 import usePromise from '../../../hooks/usePromise'
 import SecretCreatorPanel from './SecretCreatorPanel'
 import InfoPanelForStackX1 from './InformationPanels/InfoPanelForStackX1'
+import InfoPanelForStackV2 from './InformationPanels/InfoPanelForStackV2'
 
 const StackPage = () => {
   const { auth } = useContext<AuthContextType>(AuthContext)
@@ -52,7 +53,7 @@ const StackPage = () => {
     )
     setEnableVersionUpdate(
       item?.version !== stack.stack.provisioning_stack_version ||
-      stack.stack.state?.includes('ERROR'),
+        stack.stack.state?.includes('ERROR'),
     )
   }, [stackInfraList.stackList, stack.stack])
 
@@ -76,7 +77,7 @@ const StackPage = () => {
         safeConsole()?.error(e as AxiosError)
         setError(
           ((e as AxiosError)?.response?.data as any)?.message ||
-          JSON.stringify((e as AxiosError)?.response?.data),
+            JSON.stringify((e as AxiosError)?.response?.data),
         )
       } finally {
         setLoadingVersionUpdate(false)
@@ -102,7 +103,7 @@ const StackPage = () => {
         safeConsole()?.error(e as Error)
         setError(
           ((e as AxiosError)?.response?.data as any)?.message ||
-          JSON.stringify((e as AxiosError)?.response?.data),
+            JSON.stringify((e as AxiosError)?.response?.data),
         )
       } finally {
         setLoadingDeleteStack(false)
@@ -175,8 +176,9 @@ const StackPage = () => {
                 Status
               </p>
               <p
-                className={`font-medium text-xl ${stack?.stack?.state === 'AVAILABLE' ? 'text-green-600' : ''
-                  }`}
+                className={`font-medium text-xl ${
+                  stack?.stack?.state === 'AVAILABLE' ? 'text-green-600' : ''
+                }`}
               >
                 {stack?.stack?.state}
               </p>
@@ -274,6 +276,7 @@ const StackPage = () => {
           <Separator padding={10} />
           <SecretCreatorPanel stack={stack?.stack} />
           <Separator padding={10} />
+          <InfoPanelForStackV2 stack={stack?.stack} IdToken={auth?.IdToken} />
           <InfoPanelForStackX1 stack={stack?.stack} IdToken={auth?.IdToken} />
           <InfoPanelForStackV1 stack={stack?.stack} IdToken={auth?.IdToken} />
           <InfoPanelForStackV1Pro
