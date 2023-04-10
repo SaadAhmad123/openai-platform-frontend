@@ -8,6 +8,7 @@ export type FormInputItem = {
   type: string
   key: string
   isRequired?: boolean
+  default?: string
   list?: { value: string; label: string; description?: string }[]
 }
 
@@ -65,7 +66,7 @@ const Form = ({
                 }}
               />
 
-              <p className="mt-2">
+              <p className="mt-2 text-gray-600 dark:text-gray-100">
                 {input.list?.find((item) => item.value === values[input.key])
                   ?.description || ''}
               </p>
