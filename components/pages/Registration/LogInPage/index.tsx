@@ -13,9 +13,10 @@ import ConfirmUserCodeBox from '../utils/ConfirmUserCodeBox'
 import WaitingBox from '../utils/WaitingBox'
 import ForgotPasswordNewPasswordBox from './ForgotPasswordNewPasswordBox'
 import useKeyboardControl from '../../../../hooks/useKeyboardControl'
+import NewPasswordRequiredBox from './NewPasswordRequiredBox'
 
 const LogInPage = () => {
-  const {} = useLocalStorage<{
+  const { } = useLocalStorage<{
     cognitoId: string
     accessToken: string
     idToken: string
@@ -29,6 +30,7 @@ const LogInPage = () => {
     verifyAccount,
     confirmForgotPassword,
     validatePasswordStrength,
+    resolveChallenge
   } = useAuth({})
 
   const [current, send] = useMachine(loginStateMachine, {
@@ -40,19 +42,16 @@ const LogInPage = () => {
       onRequestingCode: async (context) => {
         const { email } = context
         const resp = await requestForgetPasswordConfirmationCode(email)
-        console.log({ resp })
         return resp
       },
       onConfirmUserRequestingCode: async (context) => {
         const { email } = context
         const resp = await requestVerificationCode(email)
-        console.log({ resp })
         return resp
       },
       onConfirmUserVerifyingCode: async (context) => {
         const { verificationCode, email } = context
         const resp = await verifyAccount(email, verificationCode)
-        console.log({ resp })
         return resp
       },
       onValidatePassword: async (context) => {
@@ -73,9 +72,16 @@ const LogInPage = () => {
           password,
           verificationCode,
         )
-        console.log({ resp })
         return resp
       },
+      onForcedPasswordChange: async (context) => {
+        const { auth, password } = context
+        return await resolveChallenge.NEW_PASSWORD_REQUIRED(
+          auth?.ChallengeParameters?.USER_ID_FOR_SRP,
+          password,
+          auth.Session
+        )
+      }
     },
     actions: {
       onError: (context, event) => safeConsole()?.error(event?.data?.message),
@@ -191,6 +197,24 @@ const LogInPage = () => {
         }
         heading={'Success'}
         content={'Please wait, while you are taken to the dashboard.'}
+      />
+      <NewPasswordRequiredBox
+        show={
+          current.matches("Show Force Change Password Prompt")
+        }
+        error={error}
+        handleSubmit={async (value: { [key: string]: any }) => {
+          const { password, confirmPassword } = value
+          send('UPDATE_PASSWORD', {
+            password: password || '',
+            confirmPassword: confirmPassword || '',
+          })
+        }}
+        onClickReset={() => send('RESET')}
+        loading={
+          current.matches({ 'Show Force Change Password Prompt': 'Updating Password' }) ||
+          current.matches({ 'Show Force Change Password Prompt': 'Validating Password' })
+        }
       />
     </Layout>
   )
