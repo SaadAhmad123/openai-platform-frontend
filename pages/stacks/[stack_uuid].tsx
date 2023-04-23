@@ -7,6 +7,7 @@ import LoadingScreen from '../../components/LoadingScreen'
 import ProfilePage from '../../components/pages/ProfilePage'
 import AuthProvider from '../../AuthContext'
 import StackPage from '../../components/pages/StackPage'
+import UserProfileProvider from '../../UserProfileContext'
 
 // eslint-disable-next-line react/display-name
 export default function () {
@@ -20,7 +21,9 @@ export default function () {
 
   return (
     <AuthProvider>
-      <StackPage />
+      <UserProfileProvider>
+        <StackPage />
+      </UserProfileProvider>
     </AuthProvider>
   )
 }

@@ -6,6 +6,7 @@ import useCheckUserLoginStatus, {
 import LoadingScreen from '../../components/LoadingScreen'
 import AuthProvider from '../../AuthContext'
 import DashboardPage from '../../components/pages/DashboardPage'
+import UserProfileProvider from '../../UserProfileContext'
 
 // eslint-disable-next-line react/display-name
 export default function () {
@@ -19,7 +20,9 @@ export default function () {
 
   return (
     <AuthProvider>
-      <DashboardPage />
+      <UserProfileProvider mustHaveProfile>
+        <DashboardPage />
+      </UserProfileProvider>
     </AuthProvider>
   )
 }
