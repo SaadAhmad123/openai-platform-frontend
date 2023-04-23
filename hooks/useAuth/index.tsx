@@ -265,6 +265,25 @@ const useAuth = ({
       .promise()
   }, [getAuth, cognitoClient])
 
+
+  const resolveChallenge = {
+    NEW_PASSWORD_REQUIRED: async (
+      userName: string,
+      newPassword: string,
+      session: string
+    ) => {
+      return await cognitoClient()?.respondToAuthChallenge({
+        ClientId: clientId,
+        ChallengeName: "NEW_PASSWORD_REQUIRED",
+        ChallengeResponses: {
+          USERNAME: userName,
+          NEW_PASSWORD: newPassword,
+        },
+        Session: session
+      })?.promise()
+    }
+  }
+
   return {
     signOut,
     signUp,
@@ -282,6 +301,7 @@ const useAuth = ({
     verifyAccount,
     confirmForgotPassword,
     validatePasswordStrength,
+    resolveChallenge,
   }
 }
 
