@@ -14,7 +14,7 @@ const WaitListBox = () => {
                 <br />
                 <br />
                 If granted access, I
-                will provide support in your exploration of MakeGPT's
+                will provide support in your exploration of MakeGPT{"'"}s
                 potential.
                 <br />
                 <br />
