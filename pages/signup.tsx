@@ -1,10 +1,11 @@
 import React from 'react'
-import SignUpPage from '../components/pages/Registration/SignUpPage'
+//import SignUpPage from '../components/pages/Registration/SignUpPage'
 import { useRouter } from 'next/router'
 import useCheckUserLoginStatus, {
   LoginCheckState,
 } from '../hooks/useCheckUserLoginStatus'
 import LoadingScreen from '../components/LoadingScreen'
+import WaitListBox from '../components/pages/Registration/WaitListBox'
 
 // eslint-disable-next-line react/display-name
 export default function () {
@@ -16,5 +17,5 @@ export default function () {
     return <></>
   }
 
-  return <SignUpPage />
+  return <WaitListBox />
 }
