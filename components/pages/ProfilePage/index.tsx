@@ -10,9 +10,19 @@ import userProfileStateMachine from './userProfile.statemachine'
 import { AuthContextType } from '../../../AuthContext/types'
 import AuthContext from '../../../AuthContext/Context'
 import WaitingBox from '../Registration/utils/WaitingBox'
+import useSegment from '../../../hooks/useSegment'
+import onMount from '../../../hooks/onMount'
 
 const ProfilePage = () => {
+  const segment = useSegment()
   const { authUser, auth } = useContext<AuthContextType>(AuthContext)
+
+  onMount(() => {
+    if (!authUser?.Username) return
+    segment()?.identify(authUser?.Username)
+    segment()?.page()
+  })
+
   const [current, send] = useMachine(userProfileStateMachine, {
     services: {
       onFetchingProfile: async () => await getUser(auth?.IdToken || ''),

@@ -10,7 +10,7 @@ import {
   faRedoAlt,
 } from '@fortawesome/free-solid-svg-icons'
 import Spinner from '../../../Spinner'
-import InfoTile from '../InfoTile'
+import InfoTile from '../../../InfoTile'
 import CopyButton from '../CopyButton'
 import safeConsole from '../../../../helpers/safeConsole'
 import { StackItem } from '../../../types'

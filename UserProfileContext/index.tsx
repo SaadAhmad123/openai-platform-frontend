@@ -9,20 +9,21 @@ import { AppEnvironment } from '../helpers/AppEnvironmentManager'
 import { Profile } from './types'
 import safeConsole from '../helpers/safeConsole'
 
-
 interface IUserProfileProvider {
   children: React.ReactNode
   mustHaveProfile?: boolean
 }
 
-
-const UserProfileProvider = ({ children, mustHaveProfile = false }: IUserProfileProvider) => {
+const UserProfileProvider = ({
+  children,
+  mustHaveProfile = false,
+}: IUserProfileProvider) => {
   const router = useRouter()
   const [loading, setLoading] = useState(true)
   const { getUser, getAuth } = useAuth({})
   const [profile, setProfile] = useState<Profile | undefined>()
 
-  const goToProfile = () => router.push("/profile")
+  const goToProfile = () => router.push('/profile')
 
   const getProfile = async (IdToken: string) => {
     const resp = await axios.get(AppEnvironment.makeRestUrl('/user'), {
@@ -36,13 +37,13 @@ const UserProfileProvider = ({ children, mustHaveProfile = false }: IUserProfile
 
   onMount(async () => {
     setLoading(true)
-    let _profile = undefined as (Profile | undefined)
+    let _profile = undefined as Profile | undefined
     try {
       const _auth = await getAuth()
       if (!_auth) throw new Error('No User')
       const _authUser = await getUser()
       if (!_authUser) throw new Error('No Auth User')
-      _profile = await getProfile((_auth as any)?.IdToken || "")
+      _profile = await getProfile((_auth as any)?.IdToken || '')
       setProfile(_profile)
     } catch (e) {
       safeConsole()?.error(e)
@@ -63,7 +64,7 @@ const UserProfileProvider = ({ children, mustHaveProfile = false }: IUserProfile
     <AuthContext.Provider
       value={{
         loading,
-        profile
+        profile,
       }}
     >
       {children}

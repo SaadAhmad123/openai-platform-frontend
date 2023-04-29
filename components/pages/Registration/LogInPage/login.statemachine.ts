@@ -39,7 +39,7 @@ const loginStateMachine = createMachine<LoginStateMachineContextType>(
             {
               target: 'Show Force Change Password Prompt',
               cond: 'isNewPasswordRequired',
-              actions: "assignAuthToContext"
+              actions: 'assignAuthToContext',
             },
             {
               target: 'Login Successful',
@@ -188,45 +188,48 @@ const loginStateMachine = createMachine<LoginStateMachineContextType>(
           RESET: {
             target: 'Idle',
             actions: 'clearErrorFromContext',
-          }
+          },
         },
 
         states: {
           Idle: {
             on: {
               UPDATE_PASSWORD: {
-                target: "Validating Password",
-                actions: ["assignPasswordToContext", "assignConfirmPasswordToContext"]
-              }
-            }
+                target: 'Validating Password',
+                actions: [
+                  'assignPasswordToContext',
+                  'assignConfirmPasswordToContext',
+                ],
+              },
+            },
           },
 
-          "Updating Password": {
+          'Updating Password': {
             invoke: {
-              src: "onForcedPasswordChange",
-              onDone: "#LoginMachine.Idle",
-              onError: "Error"
-            }
+              src: 'onForcedPasswordChange',
+              onDone: '#LoginMachine.Idle',
+              onError: 'Error',
+            },
           },
 
           Error: {
-            entry: ["assignErrorToContext", "onError"],
+            entry: ['assignErrorToContext', 'onError'],
 
             after: {
-              "100": "Idle"
-            }
+              '100': 'Idle',
+            },
           },
 
-          "Validating Password": {
+          'Validating Password': {
             invoke: {
-              src: "onValidatePassword",
-              onDone: "Updating Password",
-              onError: "Error"
-            }
-          }
+              src: 'onValidatePassword',
+              onDone: 'Updating Password',
+              onError: 'Error',
+            },
+          },
         },
 
-        initial: "Idle"
+        initial: 'Idle',
       },
 
       'Confirm User': {
@@ -307,7 +310,7 @@ const loginStateMachine = createMachine<LoginStateMachineContextType>(
             actions: 'clearErrorFromContext',
           },
         },
-      }
+      },
     },
     schema: {
       context: {} as {
@@ -366,7 +369,7 @@ const loginStateMachine = createMachine<LoginStateMachineContextType>(
       },
       isNewPasswordRequired: (context, event) => {
         return event?.data?.ChallengeName === 'NEW_PASSWORD_REQUIRED'
-      }
+      },
     },
   },
 )
