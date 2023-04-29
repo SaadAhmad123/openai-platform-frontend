@@ -24,7 +24,7 @@ const YoutubeVideoModal: React.FC<Props> = ({ videoUrl, isOpen, onClose }) => {
             isOpen={isOpen}
             onRequestClose={onClose}
             style={{
-                overlay: { zIndex: 1000 },
+                overlay: { zIndex: 1000, display: "flex" },
                 content: {
                     background: 'transparent',
                     display: 'flex',

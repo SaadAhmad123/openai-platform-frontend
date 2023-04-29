@@ -19,6 +19,7 @@ import useAuth from '../../hooks/useAuth'
 import Drawer from 'react-modern-drawer'
 import 'react-modern-drawer/dist/index.css'
 import useKeyboardControl from '../../hooks/useKeyboardControl'
+import Logo from '../Logo'
 
 const Navbar = ({ title, options }: INavbar) => {
   const router = useRouter()
@@ -63,19 +64,7 @@ const Navbar = ({ title, options }: INavbar) => {
       <div className="sticky top-0 mb-4 py-3 bg-white dark:bg-[#1B1E1F] shadow dark:shadow-none dark:border-b dark:border-gray-700 z-50">
         <div className="max-w-[1600px] w-screen mx-auto px-4 sm:px-8 flex items-center justify-between">
           <div>
-            {title || (
-              <div className="flex items-center gap-2">
-                <h1
-                  className="font-bold sm:text-xl m-0 p-0 cursor-pointer"
-                  onClick={() => router.push('/')}
-                >
-                  MakeGPT
-                </h1>
-                <h6 className="bg-servian-orange text-servian-white px-2 py-1 text-xs">
-                  Developers Preview
-                </h6>
-              </div>
-            )}
+            {title || (<Logo />)}
           </div>
           <div className="items-center hidden sm:flex">
             {options.map((item, index) => (

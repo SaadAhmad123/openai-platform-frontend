@@ -128,7 +128,7 @@ const IndexPage = () => {
             </InfoTile>
             <div className="py-8 lg:px-8 text-lg md:text-2xl lg:text-3xl xl:text-4xl flex items-center font-thin">
               <p>
-                <strong>MakeGPT</strong> is a game-changing{' '}
+                <strong>MakeGPT</strong> is a game-changing, low-code{' '}
                 <strong>SaaS platform</strong> that enables users with&nbsp;
                 <strong>fundamental</strong> Python <strong>skills</strong> to
                 swiftly and securely merge data with&nbsp;
@@ -143,7 +143,41 @@ const IndexPage = () => {
           </motion.div>
         </div>
       </div>
-      <Separator padding={24} />
+      <Separator padding={36} />
+      <div>
+        <h1 className="text-4xl font-bold">What MakeGPT allows you to do?</h1>
+        <Separator padding={16} />
+        <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4" >
+          {[
+            "Seamless integration with ChatGPT and related services",
+            "Data ownership and control",
+            "Customizable monitoring for chat experiences",
+            "Rapid setup and experimentation",
+            "Scalable infrastructure built on AWS serverless architecture",
+            "Versatile applications for internal knowledge base assistants, domain-specific chatbots, and AI-driven personalized content",
+            "Integration with tools like Twilio Chat and Confluence",
+          ].map((index, item) => (<InfoTile key={index}>
+            <p>{item}</p>
+          </InfoTile>))}
+        </div>
+      </div>
+      <Separator padding={36} />
+      <div>
+        <h1 className="text-4xl font-bold">What MakeGPT is NOT?</h1>
+        <Separator padding={16} />
+        <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4" >
+          {[
+            "Public search and recommendation systems(use ChatGPT plugins instead)",
+            "Expert systems(as it is an LLM, not an expert system)",
+            "MLOps pipeline or systems",
+            "Web scraping systems",
+            "Training or database system"
+          ].map((index, item) => (<InfoTile key={index}>
+            <p>{item}</p>
+          </InfoTile>))}
+        </div>
+      </div>
+      <Separator padding={36} />
       <YoutubeVideoModal
         videoUrl={'https://youtu.be/djpednhL5ec'}
         isOpen={introVideoOpen}

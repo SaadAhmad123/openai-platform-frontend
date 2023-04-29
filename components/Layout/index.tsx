@@ -2,6 +2,7 @@ import React from 'react'
 import Head from 'next/head'
 import ThemeButton from '../Buttons/ThemeButton'
 import Container from './Container'
+import Footer from '../Footer'
 
 interface ILayout {
   title?: string
@@ -20,8 +21,10 @@ const Layout = ({ children, title, navbar, noContainer }: ILayout) => {
         {navbar}
         {!noContainer && <Container>{children}</Container>}
         {noContainer && <>{children}</>}
+        <Footer />
       </div>
       <ThemeButton />
+
     </>
   )
 }
