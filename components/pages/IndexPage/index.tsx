@@ -112,7 +112,7 @@ const IndexPage = () => {
           >
             <InfoTile>
               <p className="text-lg italic font-medium leading-relaxed">
-                "The Usurping Automaton"
+                {'"'}The Usurping Automaton{'"'}
               </p>
               <p className="text-sm">
                 -{' '}
@@ -137,7 +137,7 @@ const IndexPage = () => {
                 <br />
                 <strong>Unlock the potential of AI</strong>-driven chatbots,
                 personalized content, and knowledge base assistants with
-                MakeGPT's rapid setup, data ownership, and scalability.
+                MakeGPT{"'"}s rapid setup, data ownership, and scalability.
               </p>
             </div>
           </motion.div>
