@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import usePromise from '../../../../../hooks/usePromise'
 import axios, { AxiosError } from 'axios'
-import InfoTile from '../../InfoTile'
+import InfoTile from '../../../../InfoTile'
 import Select from 'react-select'
 import Separator from '../../../../Separator'
 import Form from '../../../../utils/Form'

@@ -12,20 +12,28 @@ import useFetchUserStackList from './hooks/useFetchUserStackList'
 import StackTileContainer from './utils/StackTile/Container'
 import moment from 'moment'
 import Link from 'next/link'
-import delay from '../../../helpers/delay'
 import usePromise from '../../../hooks/usePromise'
 import { HomePageActionButton } from '../../Buttons'
 import Spinner from '../../Spinner'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faRedoAlt } from '@fortawesome/free-solid-svg-icons'
+import onMount from '../../../hooks/onMount'
+import useSegment from '../../../hooks/useSegment'
 
 const DashboardPage = () => {
-  const { auth } = useContext<AuthContextType>(AuthContext)
+  const segment = useSegment()
+  const { auth, authUser } = useContext<AuthContextType>(AuthContext)
   const [openCreateStackModal, setOpenCreateStackModal] = useState(false)
   const fetchUserStackList = useFetchUserStackList(auth?.IdToken || '')
   const toggleCreateStackModal = () => {
     setOpenCreateStackModal(!openCreateStackModal)
   }
+
+  onMount(() => {
+    if (!authUser?.Username) return
+    segment()?.identify(authUser?.Username)
+    segment()?.page()
+  })
 
   const createStack = async (values: { [p: string]: any }) => {
     if (!values.stacks) {

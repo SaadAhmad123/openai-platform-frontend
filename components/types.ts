@@ -1,4 +1,4 @@
-import { Profile } from "../UserProfileContext/types"
+import { Profile } from '../UserProfileContext/types'
 
 export type User = Profile
 
@@ -26,4 +26,18 @@ export type StackItem = {
   created_at?: string
   updated_at?: string
   stack_content?: string
+}
+
+import React from 'react'
+
+export interface NavbarOption {
+  icon?: React.ReactNode
+  text: string
+  onClick: () => void
+  type?: 'EMPHASIS'
+}
+
+export interface INavbar {
+  title?: React.ReactNode
+  options?: Array<NavbarOption>
 }
