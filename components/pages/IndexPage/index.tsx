@@ -1,19 +1,31 @@
 import { motion } from 'framer-motion'
 import Separator from '../../Separator'
 import { HomePageActionButton } from '../../Buttons'
-import { faUserPlus, faLockOpen } from '@fortawesome/free-solid-svg-icons'
+import { faUserPlus, faLockOpen, faVideo, faPlayCircle } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import Layout from '../../Layout'
 import { useRouter } from 'next/router'
 import useKeyboardControl from '../../../hooks/useKeyboardControl'
+import useSegment from '../../../hooks/useSegment'
+import onMount from '../../../hooks/onMount'
+import ThemedImage from '../../ThemedImage'
+import UnAuthenticatedNavbar from '../../UnAuthenticatedNavbar'
+import InfoTile from '../../InfoTile'
+import YoutubeVideoModal from '../../YoutubeVideoModal'
+import { useState } from 'react'
 
 const IndexPage = () => {
   const router = useRouter()
+  const segment = useSegment()
+  const [introVideoOpen, setIntroVideoOpen] = useState(false)
+  onMount(() => {
+    segment()?.identify()
+  })
   useKeyboardControl('Enter', () => router.push('/login'))
   useKeyboardControl('Equal', () => router.push('/signup'))
   return (
-    <Layout>
-      <div className="flex justify-center items-center min-h-screen">
+    <Layout navbar={<UnAuthenticatedNavbar />}>
+      <div className="flex justify-center items-center md:py-[48px] lg:py-[96px]">
         <div className="py-24">
           <div className="text-center">
             <motion.h1
@@ -55,7 +67,14 @@ const IndexPage = () => {
               icon={<FontAwesomeIcon icon={faUserPlus} size={'lg'} />}
               onClick={() => router.push('/signup')}
             />
-            <div className="p-2" />
+            <div className="p-1 md:p-2" />
+            <HomePageActionButton
+              className={'w-full justify-center sm:w-auto min-w-[170px]'}
+              text={'Play Intro'}
+              icon={<FontAwesomeIcon icon={faPlayCircle} size={'lg'} />}
+              onClick={() => setIntroVideoOpen(!introVideoOpen)}
+            />
+            <div className="p-1 md:p-2" />
             <HomePageActionButton
               className={'w-full justify-center sm:w-auto min-w-[170px]'}
               text={'Log In'}
@@ -65,6 +84,71 @@ const IndexPage = () => {
           </motion.div>
         </div>
       </div>
+      <div>
+        <div className="grid grid-cols-1 lg:grid-cols-5 gap-4">
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 1 }}
+            className={
+              'w-full h-[180px] lg:h-[500px] relative shadow bg-dark-byzantium z-500 lg:col-span-2'
+            }
+          >
+            <ThemedImage
+              src={
+                require('../../../assets/ordering-automaton-dall-e.png').default
+                  .src
+              }
+              alt="image"
+              fill
+              style={{ objectFit: 'cover' }}
+            />
+          </motion.div>
+          <motion.div
+            initial={{ opacity: 0, x: 100 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 1, delay: 0.1 }}
+            className="z-100 lg:col-span-3 h-full"
+          >
+            <InfoTile>
+              <p className="text-lg italic font-medium leading-relaxed">
+                "The Usurping Automaton"
+              </p>
+              <p className="text-sm">
+                -{' '}
+                <a
+                  href="https://www.saad-ahmad.com/"
+                  target="_blank"
+                  className="hover:underline"
+                >
+                  Saad
+                </a>{' '}
+                prompted it via Dall-E
+              </p>
+            </InfoTile>
+            <div className="py-8 lg:px-8 text-lg md:text-2xl lg:text-3xl xl:text-4xl flex items-center font-thin">
+              <p>
+                <strong>MakeGPT</strong> is a game-changing{' '}
+                <strong>SaaS platform</strong> that enables users with&nbsp;
+                <strong>fundamental</strong> Python <strong>skills</strong> to
+                swiftly and securely merge data with&nbsp;
+                <strong>ChatGPT</strong>.
+                <br />
+                <br />
+                <strong>Unlock the potential of AI</strong>-driven chatbots,
+                personalized content, and knowledge base assistants with
+                MakeGPT's rapid setup, data ownership, and scalability.
+              </p>
+            </div>
+          </motion.div>
+        </div>
+      </div>
+      <Separator padding={24} />
+      <YoutubeVideoModal
+        videoUrl={'https://youtu.be/djpednhL5ec'}
+        isOpen={introVideoOpen}
+        onClose={() => setIntroVideoOpen(!introVideoOpen)}
+      />
     </Layout>
   )
 }

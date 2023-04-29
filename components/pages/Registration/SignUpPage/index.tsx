@@ -8,9 +8,15 @@ import signupStateMachine from './signup.statemachine'
 import SignupBox from './SignupBox'
 import ConfirmUserCodeBox from '../utils/ConfirmUserCodeBox'
 import WaitingBox from '../utils/WaitingBox'
+import useSegment from '../../../../hooks/useSegment'
+import onMount from '../../../../hooks/onMount'
 
 const SignUpPage = () => {
   const router = useRouter()
+  const segment = useSegment()
+  onMount(() => {
+    segment()?.identify()
+  })
   const { signUp, validatePasswordStrength, verifyAccount } = useAuth({})
   const [current, send] = useMachine(signupStateMachine, {
     services: {

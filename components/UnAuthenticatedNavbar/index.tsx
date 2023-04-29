@@ -12,6 +12,7 @@ import {
   faBars,
   faList,
   faLock,
+  faBook,
 } from '@fortawesome/free-solid-svg-icons'
 import Separator from '../Separator'
 import { useRouter } from 'next/router'
@@ -20,37 +21,24 @@ import Drawer from 'react-modern-drawer'
 import 'react-modern-drawer/dist/index.css'
 import useKeyboardControl from '../../hooks/useKeyboardControl'
 
-const Navbar = ({ title, options }: INavbar) => {
+const UnAuthenticatedNavbar = ({ title, options }: INavbar) => {
   const router = useRouter()
   const { signOut } = useAuth({})
   useKeyboardControl('Slash', () => router.push('/dashboard'))
-  useKeyboardControl('KeyP', () => router.push('/profile'))
-  useKeyboardControl('Escape', async () => {
-    await signOut()
-    router.push('/')
-    return
-  })
+  useKeyboardControl('KeyA', () => router.push('/about'))
+  useKeyboardControl('KeyH', () => router.push('/'))
   options =
     options ||
     ([
       {
+        icon: <FontAwesomeIcon icon={faBook} />,
+        text: 'Documentation',
+        onClick: () => router.push('/about'),
+      },
+      {
         icon: <FontAwesomeIcon icon={faList} />,
         text: 'Dashboard',
         onClick: () => router.push('/dashboard'),
-      },
-      {
-        icon: <FontAwesomeIcon icon={faUserCircle} />,
-        text: 'Profile',
-        onClick: () => router.push('/profile'),
-      },
-      {
-        icon: <FontAwesomeIcon icon={faLock} />,
-        text: 'Sign Out',
-        onClick: async () => {
-          await signOut()
-          router.push('/')
-          return
-        },
         type: 'EMPHASIS',
       },
     ] as Array<NavbarOption>)
@@ -60,7 +48,7 @@ const Navbar = ({ title, options }: INavbar) => {
 
   return (
     <>
-      <div className="sticky top-0 mb-4 py-3 bg-white dark:bg-[#1B1E1F] shadow dark:shadow-none dark:border-b dark:border-gray-700 z-50">
+      <div className="fixed w-screen top-0 mb-4 py-3 bg-white dark:bg-[#1B1E1F] shadow dark:shadow-none dark:border-b dark:border-gray-700 z-50">
         <div className="max-w-[1600px] w-screen mx-auto px-4 sm:px-8 flex items-center justify-between">
           <div>
             {title || (
@@ -153,4 +141,4 @@ const Navbar = ({ title, options }: INavbar) => {
   )
 }
 
-export default Navbar
+export default UnAuthenticatedNavbar

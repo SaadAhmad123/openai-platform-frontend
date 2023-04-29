@@ -11,7 +11,7 @@ import Separator from '../../Separator'
 import Spinner from '../../Spinner'
 import { StackItem } from '../../types'
 import Form from '../../utils/Form'
-import InfoTile from './InfoTile'
+import InfoTile from '../../InfoTile'
 
 interface ISecretCreatorPanel {
   stack?: StackItem

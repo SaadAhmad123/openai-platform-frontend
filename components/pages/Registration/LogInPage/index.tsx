@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { use, useEffect } from 'react'
 import Layout from '../../../Layout'
 import { useRouter } from 'next/router'
 import { useMachine } from '@xstate/react'
@@ -14,15 +14,18 @@ import WaitingBox from '../utils/WaitingBox'
 import ForgotPasswordNewPasswordBox from './ForgotPasswordNewPasswordBox'
 import useKeyboardControl from '../../../../hooks/useKeyboardControl'
 import NewPasswordRequiredBox from './NewPasswordRequiredBox'
+import useSegment from '../../../../hooks/useSegment'
+import onMount from '../../../../hooks/onMount'
 
 const LogInPage = () => {
-  const { } = useLocalStorage<{
+  const {} = useLocalStorage<{
     cognitoId: string
     accessToken: string
     idToken: string
   }>()
   const router = useRouter()
   const {
+    getUser: getAuthUser,
     logIn,
     save,
     requestForgetPasswordConfirmationCode,
@@ -30,28 +33,38 @@ const LogInPage = () => {
     verifyAccount,
     confirmForgotPassword,
     validatePasswordStrength,
-    resolveChallenge
+    resolveChallenge,
   } = useAuth({})
+  const segment = useSegment()
+
+  onMount(() => {
+    segment()?.identify()
+  })
 
   const [current, send] = useMachine(loginStateMachine, {
     services: {
       onLoggingIn: async (context) => {
         const { email, password } = context
-        return await logIn(email, password)
+        const resp = await logIn(email, password)
+        segment()?.track('User Logging In')
+        return resp
       },
       onRequestingCode: async (context) => {
         const { email } = context
         const resp = await requestForgetPasswordConfirmationCode(email)
+        segment()?.track('User Forgot Password Confirmation Code Requested')
         return resp
       },
       onConfirmUserRequestingCode: async (context) => {
         const { email } = context
         const resp = await requestVerificationCode(email)
+        segment()?.track('User Verfication Code Requested')
         return resp
       },
       onConfirmUserVerifyingCode: async (context) => {
         const { verificationCode, email } = context
         const resp = await verifyAccount(email, verificationCode)
+        segment()?.track('User Account Verfied')
         return resp
       },
       onValidatePassword: async (context) => {
@@ -72,22 +85,26 @@ const LogInPage = () => {
           password,
           verificationCode,
         )
+        segment()?.track('User Password Updated')
         return resp
       },
       onForcedPasswordChange: async (context) => {
         const { auth, password } = context
-        return await resolveChallenge.NEW_PASSWORD_REQUIRED(
+        const resp = await resolveChallenge.NEW_PASSWORD_REQUIRED(
           auth?.ChallengeParameters?.USER_ID_FOR_SRP,
           password,
-          auth.Session
+          auth.Session,
         )
-      }
+        segment()?.track('User Password Forced Change')
+        return resp
+      },
     },
     actions: {
       onError: (context, event) => safeConsole()?.error(event?.data?.message),
       onLoginSuccessful: (context, event) => {
         const { data } = event
         save(data)
+        segment()?.track('User Logged In')
         send('REDIRECT')
       },
       onRedirect: () => {
@@ -199,9 +216,7 @@ const LogInPage = () => {
         content={'Please wait, while you are taken to the dashboard.'}
       />
       <NewPasswordRequiredBox
-        show={
-          current.matches("Show Force Change Password Prompt")
-        }
+        show={current.matches('Show Force Change Password Prompt')}
         error={error}
         handleSubmit={async (value: { [key: string]: any }) => {
           const { password, confirmPassword } = value
@@ -212,8 +227,12 @@ const LogInPage = () => {
         }}
         onClickReset={() => send('RESET')}
         loading={
-          current.matches({ 'Show Force Change Password Prompt': 'Updating Password' }) ||
-          current.matches({ 'Show Force Change Password Prompt': 'Validating Password' })
+          current.matches({
+            'Show Force Change Password Prompt': 'Updating Password',
+          }) ||
+          current.matches({
+            'Show Force Change Password Prompt': 'Validating Password',
+          })
         }
       />
     </Layout>

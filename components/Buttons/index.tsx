@@ -80,3 +80,12 @@ export const IconButton = createIconButton(
 export const RegistrationSecondaryButton = createButton(
   'text-gray-600 dark:text-gray-100 hover:bg-gray-200 dark:hover:bg-black py-1 text-sm transition duration-250',
 )
+
+export const NavOptionButton = createButton(
+  'bg-white dark:bg-[#1B1E1F] px-4 py-1 rounded-full border dark:border-gray-700 hover:border-servian-orange hover:dark:border-servian-orange',
+  { start: true },
+)
+export const NavEmphasisedOptionButton = createButton(
+  'text-servian-white bg-servian-orange hover:bg-[#1B1E1F] px-4 py-1 rounded-full border border-servian-orange ',
+  { start: true },
+)
