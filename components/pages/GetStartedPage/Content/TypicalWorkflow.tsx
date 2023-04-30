@@ -1,0 +1,50 @@
+import React from 'react'
+import { IContentComponent } from './types'
+import { MainHeading } from './common'
+import { Text } from './common'
+import { registerGetStartedContent } from '.'
+
+function TypicalWorkflow({ link }: IContentComponent) {
+    return (
+        <section id={link}>
+            <MainHeading>
+                Typical Workflow
+            </MainHeading>
+            <Text>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus porttitor mauris pharetra dolor sodales tempor. Nunc malesuada rhoncus enim ut imperdiet. Sed pharetra facilisis ultrices. Nam purus lacus, feugiat vitae pulvinar posuere, interdum sed enim. Nunc non elit in elit rhoncus aliquam. Nam a auctor lorem. Donec sollicitudin metus vel augue congue tincidunt. Maecenas blandit elementum elit vel sodales. Donec interdum nunc sit amet arcu venenatis, vitae consequat sapien eleifend. Praesent euismod eget tortor in dapibus. Proin ut malesuada justo.
+
+                Proin ullamcorper cursus cursus. Sed convallis augue a nulla mattis dapibus. Integer eu accumsan ligula. Maecenas eu libero dictum, ultrices lectus nec, ullamcorper lectus. Suspendisse est nisi, fermentum id sem sit amet, bibendum hendrerit ante. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Donec luctus eget nulla sit amet efficitur. Aliquam gravida laoreet magna quis pulvinar. In non pulvinar mauris. Ut risus turpis, ultrices eget ligula quis, tincidunt elementum dui. Vivamus vel neque vel dolor viverra bibendum. Donec ac ultricies ante, nec porttitor ipsum. Nunc id nisl commodo eros scelerisque auctor. Nam enim nisl, scelerisque ac ultricies in, vulputate a neque. Fusce enim quam, placerat et vulputate in, eleifend id odio.
+
+                Suspendisse potenti. Nullam tristique sagittis eros, a ultrices erat posuere id. Nam sit amet orci dignissim, elementum turpis eget, consectetur libero. Donec rhoncus semper lacus a rhoncus. Curabitur in elementum purus. Vestibulum eget iaculis nisi, aliquet semper lorem. Suspendisse in nulla vulputate, tempus nunc a, posuere diam. Vivamus at elit et turpis gravida vehicula pellentesque molestie enim. Cras elit lorem, mollis eget dapibus placerat, maximus eget risus. Nunc sit amet quam odio. Sed non ex libero. Vestibulum augue magna, auctor ac dui nec, placerat pharetra neque.
+
+                Quisque eu risus consequat ligula egestas tincidunt. Sed porta ultrices quam, vel vulputate magna. Maecenas laoreet sed dolor sed vulputate. Ut scelerisque rutrum arcu id feugiat. Ut quis lectus ut tortor efficitur rutrum. Fusce lobortis fringilla sodales. Morbi malesuada, odio pulvinar ornare aliquet, purus nisl aliquam nunc, at lacinia dolor nisi ac nibh. Donec scelerisque, turpis nec tempus finibus, tortor metus lobortis risus, non molestie lectus dui a erat. Suspendisse viverra, arcu ac mattis dapibus, urna risus interdum nisi, ut tempor metus quam sit amet leo. Nunc eget eros malesuada, efficitur nibh sit amet, bibendum nunc. Donec accumsan consectetur massa, ac semper elit auctor vitae.
+
+                Aliquam gravida odio eget dolor tristique rhoncus. Vestibulum tristique semper neque ac condimentum. Morbi rutrum, sapien vitae mollis scelerisque, orci nunc blandit felis, vel vestibulum nunc diam a dui. Maecenas id ultricies velit. Duis tincidunt ipsum a diam imperdiet porttitor. Sed sit amet odio justo. Morbi dolor libero, egestas non nisl ut, finibus mattis est. Donec eleifend ullamcorper accumsan. In hac habitasse platea dictumst. Quisque maximus vitae ex in laoreet. Maecenas nec nibh erat
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus porttitor mauris pharetra dolor sodales tempor. Nunc malesuada rhoncus enim ut imperdiet. Sed pharetra facilisis ultrices. Nam purus lacus, feugiat vitae pulvinar posuere, interdum sed enim. Nunc non elit in elit rhoncus aliquam. Nam a auctor lorem. Donec sollicitudin metus vel augue congue tincidunt. Maecenas blandit elementum elit vel sodales. Donec interdum nunc sit amet arcu venenatis, vitae consequat sapien eleifend. Praesent euismod eget tortor in dapibus. Proin ut malesuada justo.
+
+                Proin ullamcorper cursus cursus. Sed convallis augue a nulla mattis dapibus. Integer eu accumsan ligula. Maecenas eu libero dictum, ultrices lectus nec, ullamcorper lectus. Suspendisse est nisi, fermentum id sem sit amet, bibendum hendrerit ante. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Donec luctus eget nulla sit amet efficitur. Aliquam gravida laoreet magna quis pulvinar. In non pulvinar mauris. Ut risus turpis, ultrices eget ligula quis, tincidunt elementum dui. Vivamus vel neque vel dolor viverra bibendum. Donec ac ultricies ante, nec porttitor ipsum. Nunc id nisl commodo eros scelerisque auctor. Nam enim nisl, scelerisque ac ultricies in, vulputate a neque. Fusce enim quam, placerat et vulputate in, eleifend id odio.
+
+                Suspendisse potenti. Nullam tristique sagittis eros, a ultrices erat posuere id. Nam sit amet orci dignissim, elementum turpis eget, consectetur libero. Donec rhoncus semper lacus a rhoncus. Curabitur in elementum purus. Vestibulum eget iaculis nisi, aliquet semper lorem. Suspendisse in nulla vulputate, tempus nunc a, posuere diam. Vivamus at elit et turpis gravida vehicula pellentesque molestie enim. Cras elit lorem, mollis eget dapibus placerat, maximus eget risus. Nunc sit amet quam odio. Sed non ex libero. Vestibulum augue magna, auctor ac dui nec, placerat pharetra neque.
+
+                Quisque eu risus consequat ligula egestas tincidunt. Sed porta ultrices quam, vel vulputate magna. Maecenas laoreet sed dolor sed vulputate. Ut scelerisque rutrum arcu id feugiat. Ut quis lectus ut tortor efficitur rutrum. Fusce lobortis fringilla sodales. Morbi malesuada, odio pulvinar ornare aliquet, purus nisl aliquam nunc, at lacinia dolor nisi ac nibh. Donec scelerisque, turpis nec tempus finibus, tortor metus lobortis risus, non molestie lectus dui a erat. Suspendisse viverra, arcu ac mattis dapibus, urna risus interdum nisi, ut tempor metus quam sit amet leo. Nunc eget eros malesuada, efficitur nibh sit amet, bibendum nunc. Donec accumsan consectetur massa, ac semper elit auctor vitae.
+
+                Aliquam gravida odio eget dolor tristique rhoncus. Vestibulum tristique semper neque ac condimentum. Morbi rutrum, sapien vitae mollis scelerisque, orci nunc blandit felis, vel vestibulum nunc diam a dui. Maecenas id ultricies velit. Duis tincidunt ipsum a diam imperdiet porttitor. Sed sit amet odio justo. Morbi dolor libero, egestas non nisl ut, finibus mattis est. Donec eleifend ullamcorper accumsan. In hac habitasse platea dictumst. Quisque maximus vitae ex in laoreet. Maecenas nec nibh erat
+
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus porttitor mauris pharetra dolor sodales tempor. Nunc malesuada rhoncus enim ut imperdiet. Sed pharetra facilisis ultrices. Nam purus lacus, feugiat vitae pulvinar posuere, interdum sed enim. Nunc non elit in elit rhoncus aliquam. Nam a auctor lorem. Donec sollicitudin metus vel augue congue tincidunt. Maecenas blandit elementum elit vel sodales. Donec interdum nunc sit amet arcu venenatis, vitae consequat sapien eleifend. Praesent euismod eget tortor in dapibus. Proin ut malesuada justo.
+
+                Proin ullamcorper cursus cursus. Sed convallis augue a nulla mattis dapibus. Integer eu accumsan ligula. Maecenas eu libero dictum, ultrices lectus nec, ullamcorper lectus. Suspendisse est nisi, fermentum id sem sit amet, bibendum hendrerit ante. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Donec luctus eget nulla sit amet efficitur. Aliquam gravida laoreet magna quis pulvinar. In non pulvinar mauris. Ut risus turpis, ultrices eget ligula quis, tincidunt elementum dui. Vivamus vel neque vel dolor viverra bibendum. Donec ac ultricies ante, nec porttitor ipsum. Nunc id nisl commodo eros scelerisque auctor. Nam enim nisl, scelerisque ac ultricies in, vulputate a neque. Fusce enim quam, placerat et vulputate in, eleifend id odio.
+
+                Suspendisse potenti. Nullam tristique sagittis eros, a ultrices erat posuere id. Nam sit amet orci dignissim, elementum turpis eget, consectetur libero. Donec rhoncus semper lacus a rhoncus. Curabitur in elementum purus. Vestibulum eget iaculis nisi, aliquet semper lorem. Suspendisse in nulla vulputate, tempus nunc a, posuere diam. Vivamus at elit et turpis gravida vehicula pellentesque molestie enim. Cras elit lorem, mollis eget dapibus placerat, maximus eget risus. Nunc sit amet quam odio. Sed non ex libero. Vestibulum augue magna, auctor ac dui nec, placerat pharetra neque.
+
+                Quisque eu risus consequat ligula egestas tincidunt. Sed porta ultrices quam, vel vulputate magna. Maecenas laoreet sed dolor sed vulputate. Ut scelerisque rutrum arcu id feugiat. Ut quis lectus ut tortor efficitur rutrum. Fusce lobortis fringilla sodales. Morbi malesuada, odio pulvinar ornare aliquet, purus nisl aliquam nunc, at lacinia dolor nisi ac nibh. Donec scelerisque, turpis nec tempus finibus, tortor metus lobortis risus, non molestie lectus dui a erat. Suspendisse viverra, arcu ac mattis dapibus, urna risus interdum nisi, ut tempor metus quam sit amet leo. Nunc eget eros malesuada, efficitur nibh sit amet, bibendum nunc. Donec accumsan consectetur massa, ac semper elit auctor vitae.
+
+                Aliquam gravida odio eget dolor tristique rhoncus. Vestibulum tristique semper neque ac condimentum. Morbi rutrum, sapien vitae mollis scelerisque, orci nunc blandit felis, vel vestibulum nunc diam a dui. Maecenas id ultricies velit. Duis tincidunt ipsum a diam imperdiet porttitor. Sed sit amet odio justo. Morbi dolor libero, egestas non nisl ut, finibus mattis est. Donec eleifend ullamcorper accumsan. In hac habitasse platea dictumst. Quisque maximus vitae ex in laoreet. Maecenas nec nibh erat
+
+
+
+            </Text>
+        </section>
+    )
+}
+
+export default TypicalWorkflow
