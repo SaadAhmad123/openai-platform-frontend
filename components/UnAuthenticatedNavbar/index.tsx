@@ -13,6 +13,7 @@ import {
   faList,
   faLock,
   faBook,
+  faHome,
 } from '@fortawesome/free-solid-svg-icons'
 import Separator from '../Separator'
 import { useRouter } from 'next/router'
@@ -24,17 +25,21 @@ import Logo from '../Logo'
 
 const UnAuthenticatedNavbar = ({ title, options }: INavbar) => {
   const router = useRouter()
-  const { signOut } = useAuth({})
   useKeyboardControl('Slash', () => router.push('/dashboard'))
-  useKeyboardControl('KeyA', () => router.push('/about'))
+  useKeyboardControl('KeyA', () => router.push('/know-more'))
   useKeyboardControl('KeyH', () => router.push('/'))
   options =
     options ||
     ([
       {
+        icon: <FontAwesomeIcon icon={faHome} />,
+        text: 'Home',
+        onClick: () => router.push('/'),
+      },
+      {
         icon: <FontAwesomeIcon icon={faBook} />,
-        text: 'Documentation',
-        onClick: () => router.push('/about'),
+        text: 'Know More',
+        onClick: () => router.push('/know-more'),
       },
       {
         icon: <FontAwesomeIcon icon={faList} />,
@@ -51,9 +56,7 @@ const UnAuthenticatedNavbar = ({ title, options }: INavbar) => {
     <>
       <div className="fixed w-screen top-0 mb-4 py-3 bg-white dark:bg-[#1B1E1F] shadow dark:shadow-none dark:border-b dark:border-gray-700 z-50">
         <div className="max-w-[1600px] w-screen mx-auto px-4 sm:px-8 flex items-center justify-between">
-          <div>
-            {title || (<Logo />)}
-          </div>
+          <div>{title || <Logo />}</div>
           <div className="items-center hidden sm:flex">
             {options.map((item, index) => (
               <React.Fragment key={index.toString() + 'desktop-0'}>
