@@ -18,7 +18,7 @@ interface ILayout {
 
 const Layout = ({ children, title, navbar, noContainer }: ILayout) => {
   const feedbackRef = useRef<HTMLAnchorElement>(null)
-  useKeyboardControl("KeyE", () => feedbackRef.current?.click())
+  useKeyboardControl('KeyE', () => feedbackRef.current?.click())
   return (
     <>
       <Head>
@@ -32,10 +32,15 @@ const Layout = ({ children, title, navbar, noContainer }: ILayout) => {
         <Footer />
       </div>
       <ThemeButton />
-      <a title={"Shift + Option(Mac) / Alt(Windows) + E"} ref={feedbackRef} target="_blank" href="https://forms.gle/eDhgnSAmE4Eto1AMA" className="text-sm flex items-center justify-center fixed left-4 md:left-6 lg:left-8 bottom-4 md:bottom-6 lg:bottom-8 hover:bg-[#1B1E1F] transition duration-200 shadow-lg bg-servian-orange text-servian-white py-1 px-2">
+      <a
+        title={'Shift + Option(Mac) / Alt(Windows) + E'}
+        ref={feedbackRef}
+        target="_blank"
+        href="https://forms.gle/eDhgnSAmE4Eto1AMA"
+        className="text-sm flex items-center justify-center fixed left-4 md:left-6 lg:left-8 bottom-4 md:bottom-6 lg:bottom-8 hover:bg-[#1B1E1F] transition duration-200 shadow-lg bg-servian-orange text-servian-white py-1 px-2"
+      >
         <FontAwesomeIcon icon={faComment} />
-        &nbsp;
-        Feedback
+        &nbsp; Feedback
       </a>
     </>
   )
