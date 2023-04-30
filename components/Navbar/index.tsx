@@ -12,6 +12,7 @@ import {
   faBars,
   faList,
   faLock,
+  faBook,
 } from '@fortawesome/free-solid-svg-icons'
 import Separator from '../Separator'
 import { useRouter } from 'next/router'
@@ -26,6 +27,7 @@ const Navbar = ({ title, options }: INavbar) => {
   const { signOut } = useAuth({})
   useKeyboardControl('Slash', () => router.push('/dashboard'))
   useKeyboardControl('KeyP', () => router.push('/profile'))
+  useKeyboardControl('KeyA', () => router.push('/know-more'))
   useKeyboardControl('Escape', async () => {
     await signOut()
     router.push('/')
@@ -43,6 +45,11 @@ const Navbar = ({ title, options }: INavbar) => {
         icon: <FontAwesomeIcon icon={faUserCircle} />,
         text: 'Profile',
         onClick: () => router.push('/profile'),
+      },
+      {
+        icon: <FontAwesomeIcon icon={faBook} />,
+        text: 'Know More',
+        onClick: () => router.push('/know-more'),
       },
       {
         icon: <FontAwesomeIcon icon={faLock} />,
@@ -63,9 +70,7 @@ const Navbar = ({ title, options }: INavbar) => {
     <>
       <div className="sticky top-0 mb-4 py-3 bg-white dark:bg-[#1B1E1F] shadow dark:shadow-none dark:border-b dark:border-gray-700 z-50">
         <div className="max-w-[1600px] w-screen mx-auto px-4 sm:px-8 flex items-center justify-between">
-          <div>
-            {title || (<Logo />)}
-          </div>
+          <div>{title || <Logo />}</div>
           <div className="items-center hidden sm:flex">
             {options.map((item, index) => (
               <React.Fragment key={index.toString() + 'desktop-0'}>

@@ -1,7 +1,12 @@
 import { motion } from 'framer-motion'
 import Separator from '../../Separator'
 import { HomePageActionButton } from '../../Buttons'
-import { faUserPlus, faLockOpen, faVideo, faPlayCircle } from '@fortawesome/free-solid-svg-icons'
+import {
+  faUserPlus,
+  faLockOpen,
+  faVideo,
+  faPlayCircle,
+} from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import Layout from '../../Layout'
 import { useRouter } from 'next/router'
@@ -136,8 +141,8 @@ const IndexPage = () => {
                 <br />
                 <br />
                 <strong>Unlock the potential of AI</strong>-driven chatbots,
-                personalized content, and knowledge base assistants with
-                MakeGPT{"'"}s rapid setup, data ownership, and scalability.
+                personalized content, and knowledge base assistants with MakeGPT
+                {"'"}s rapid setup, data ownership, and scalability.
               </p>
             </div>
           </motion.div>
@@ -147,37 +152,40 @@ const IndexPage = () => {
       <div>
         <h1 className="text-4xl font-bold">What MakeGPT allows you to do?</h1>
         <Separator padding={16} />
-        <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4" >
+        <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4">
           {[
-            "Seamless integration with ChatGPT and related services",
-            "Data ownership and control",
-            "Customizable monitoring for chat experiences",
-            "Rapid setup and experimentation",
-            "Scalable infrastructure built on AWS serverless architecture",
-            "Versatile applications for internal knowledge base assistants, domain-specific chatbots, and AI-driven personalized content",
-            "Integration with tools like Twilio Chat and Confluence",
-          ].map((index, item) => (<InfoTile key={index}>
-            <p>{item}</p>
-          </InfoTile>))}
+            'Seamless integration with ChatGPT and related services',
+            'Data ownership and control',
+            'Customizable monitoring for chat experiences',
+            'Rapid setup and experimentation',
+            'Scalable infrastructure built on AWS serverless architecture',
+            'Versatile applications for internal knowledge base assistants, domain-specific chatbots, and AI-driven personalized content',
+            'Integration with tools like Twilio Chat and Confluence',
+          ].map((item, index) => (
+            <InfoTile key={index}>
+              <p>{item}</p>
+            </InfoTile>
+          ))}
         </div>
       </div>
       <Separator padding={36} />
       <div>
         <h1 className="text-4xl font-bold">What MakeGPT is NOT?</h1>
         <Separator padding={16} />
-        <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4" >
+        <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4">
           {[
-            "Public search and recommendation systems(use ChatGPT plugins instead)",
-            "Expert systems(as it is an LLM, not an expert system)",
-            "MLOps pipeline or systems",
-            "Web scraping systems",
-            "Training or database system"
-          ].map((index, item) => (<InfoTile key={index}>
-            <p>{item}</p>
-          </InfoTile>))}
+            'Public search and recommendation systems(use ChatGPT plugins instead)',
+            'Expert systems(as it is an LLM, not an expert system)',
+            'MLOps pipeline or systems',
+            'Web scraping systems',
+            'Training or database system',
+          ].map((item, index) => (
+            <InfoTile key={index}>
+              <p>{item}</p>
+            </InfoTile>
+          ))}
         </div>
       </div>
-      <Separator padding={36} />
       <YoutubeVideoModal
         videoUrl={'https://youtu.be/djpednhL5ec'}
         isOpen={introVideoOpen}
