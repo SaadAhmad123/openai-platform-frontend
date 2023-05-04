@@ -1,48 +1,93 @@
 import React from 'react'
 import { IContentComponent } from './types'
-import { MainHeading } from './common'
+import { MainHeading, UL } from './common'
 import { Text } from './common'
-import { registerGetStartedContent } from '.'
+import Separator from '../../../Separator'
 
 function TypicalWorkflow({ link }: IContentComponent) {
     return (
         <section id={link}>
-            <MainHeading>
-                Typical Workflow
-            </MainHeading>
+            <MainHeading>Typical Workflow</MainHeading>
+            <Separator padding={8} />
             <Text>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus porttitor mauris pharetra dolor sodales tempor. Nunc malesuada rhoncus enim ut imperdiet. Sed pharetra facilisis ultrices. Nam purus lacus, feugiat vitae pulvinar posuere, interdum sed enim. Nunc non elit in elit rhoncus aliquam. Nam a auctor lorem. Donec sollicitudin metus vel augue congue tincidunt. Maecenas blandit elementum elit vel sodales. Donec interdum nunc sit amet arcu venenatis, vitae consequat sapien eleifend. Praesent euismod eget tortor in dapibus. Proin ut malesuada justo.
-
-                Proin ullamcorper cursus cursus. Sed convallis augue a nulla mattis dapibus. Integer eu accumsan ligula. Maecenas eu libero dictum, ultrices lectus nec, ullamcorper lectus. Suspendisse est nisi, fermentum id sem sit amet, bibendum hendrerit ante. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Donec luctus eget nulla sit amet efficitur. Aliquam gravida laoreet magna quis pulvinar. In non pulvinar mauris. Ut risus turpis, ultrices eget ligula quis, tincidunt elementum dui. Vivamus vel neque vel dolor viverra bibendum. Donec ac ultricies ante, nec porttitor ipsum. Nunc id nisl commodo eros scelerisque auctor. Nam enim nisl, scelerisque ac ultricies in, vulputate a neque. Fusce enim quam, placerat et vulputate in, eleifend id odio.
-
-                Suspendisse potenti. Nullam tristique sagittis eros, a ultrices erat posuere id. Nam sit amet orci dignissim, elementum turpis eget, consectetur libero. Donec rhoncus semper lacus a rhoncus. Curabitur in elementum purus. Vestibulum eget iaculis nisi, aliquet semper lorem. Suspendisse in nulla vulputate, tempus nunc a, posuere diam. Vivamus at elit et turpis gravida vehicula pellentesque molestie enim. Cras elit lorem, mollis eget dapibus placerat, maximus eget risus. Nunc sit amet quam odio. Sed non ex libero. Vestibulum augue magna, auctor ac dui nec, placerat pharetra neque.
-
-                Quisque eu risus consequat ligula egestas tincidunt. Sed porta ultrices quam, vel vulputate magna. Maecenas laoreet sed dolor sed vulputate. Ut scelerisque rutrum arcu id feugiat. Ut quis lectus ut tortor efficitur rutrum. Fusce lobortis fringilla sodales. Morbi malesuada, odio pulvinar ornare aliquet, purus nisl aliquam nunc, at lacinia dolor nisi ac nibh. Donec scelerisque, turpis nec tempus finibus, tortor metus lobortis risus, non molestie lectus dui a erat. Suspendisse viverra, arcu ac mattis dapibus, urna risus interdum nisi, ut tempor metus quam sit amet leo. Nunc eget eros malesuada, efficitur nibh sit amet, bibendum nunc. Donec accumsan consectetur massa, ac semper elit auctor vitae.
-
-                Aliquam gravida odio eget dolor tristique rhoncus. Vestibulum tristique semper neque ac condimentum. Morbi rutrum, sapien vitae mollis scelerisque, orci nunc blandit felis, vel vestibulum nunc diam a dui. Maecenas id ultricies velit. Duis tincidunt ipsum a diam imperdiet porttitor. Sed sit amet odio justo. Morbi dolor libero, egestas non nisl ut, finibus mattis est. Donec eleifend ullamcorper accumsan. In hac habitasse platea dictumst. Quisque maximus vitae ex in laoreet. Maecenas nec nibh erat
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus porttitor mauris pharetra dolor sodales tempor. Nunc malesuada rhoncus enim ut imperdiet. Sed pharetra facilisis ultrices. Nam purus lacus, feugiat vitae pulvinar posuere, interdum sed enim. Nunc non elit in elit rhoncus aliquam. Nam a auctor lorem. Donec sollicitudin metus vel augue congue tincidunt. Maecenas blandit elementum elit vel sodales. Donec interdum nunc sit amet arcu venenatis, vitae consequat sapien eleifend. Praesent euismod eget tortor in dapibus. Proin ut malesuada justo.
-
-                Proin ullamcorper cursus cursus. Sed convallis augue a nulla mattis dapibus. Integer eu accumsan ligula. Maecenas eu libero dictum, ultrices lectus nec, ullamcorper lectus. Suspendisse est nisi, fermentum id sem sit amet, bibendum hendrerit ante. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Donec luctus eget nulla sit amet efficitur. Aliquam gravida laoreet magna quis pulvinar. In non pulvinar mauris. Ut risus turpis, ultrices eget ligula quis, tincidunt elementum dui. Vivamus vel neque vel dolor viverra bibendum. Donec ac ultricies ante, nec porttitor ipsum. Nunc id nisl commodo eros scelerisque auctor. Nam enim nisl, scelerisque ac ultricies in, vulputate a neque. Fusce enim quam, placerat et vulputate in, eleifend id odio.
-
-                Suspendisse potenti. Nullam tristique sagittis eros, a ultrices erat posuere id. Nam sit amet orci dignissim, elementum turpis eget, consectetur libero. Donec rhoncus semper lacus a rhoncus. Curabitur in elementum purus. Vestibulum eget iaculis nisi, aliquet semper lorem. Suspendisse in nulla vulputate, tempus nunc a, posuere diam. Vivamus at elit et turpis gravida vehicula pellentesque molestie enim. Cras elit lorem, mollis eget dapibus placerat, maximus eget risus. Nunc sit amet quam odio. Sed non ex libero. Vestibulum augue magna, auctor ac dui nec, placerat pharetra neque.
-
-                Quisque eu risus consequat ligula egestas tincidunt. Sed porta ultrices quam, vel vulputate magna. Maecenas laoreet sed dolor sed vulputate. Ut scelerisque rutrum arcu id feugiat. Ut quis lectus ut tortor efficitur rutrum. Fusce lobortis fringilla sodales. Morbi malesuada, odio pulvinar ornare aliquet, purus nisl aliquam nunc, at lacinia dolor nisi ac nibh. Donec scelerisque, turpis nec tempus finibus, tortor metus lobortis risus, non molestie lectus dui a erat. Suspendisse viverra, arcu ac mattis dapibus, urna risus interdum nisi, ut tempor metus quam sit amet leo. Nunc eget eros malesuada, efficitur nibh sit amet, bibendum nunc. Donec accumsan consectetur massa, ac semper elit auctor vitae.
-
-                Aliquam gravida odio eget dolor tristique rhoncus. Vestibulum tristique semper neque ac condimentum. Morbi rutrum, sapien vitae mollis scelerisque, orci nunc blandit felis, vel vestibulum nunc diam a dui. Maecenas id ultricies velit. Duis tincidunt ipsum a diam imperdiet porttitor. Sed sit amet odio justo. Morbi dolor libero, egestas non nisl ut, finibus mattis est. Donec eleifend ullamcorper accumsan. In hac habitasse platea dictumst. Quisque maximus vitae ex in laoreet. Maecenas nec nibh erat
-
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus porttitor mauris pharetra dolor sodales tempor. Nunc malesuada rhoncus enim ut imperdiet. Sed pharetra facilisis ultrices. Nam purus lacus, feugiat vitae pulvinar posuere, interdum sed enim. Nunc non elit in elit rhoncus aliquam. Nam a auctor lorem. Donec sollicitudin metus vel augue congue tincidunt. Maecenas blandit elementum elit vel sodales. Donec interdum nunc sit amet arcu venenatis, vitae consequat sapien eleifend. Praesent euismod eget tortor in dapibus. Proin ut malesuada justo.
-
-                Proin ullamcorper cursus cursus. Sed convallis augue a nulla mattis dapibus. Integer eu accumsan ligula. Maecenas eu libero dictum, ultrices lectus nec, ullamcorper lectus. Suspendisse est nisi, fermentum id sem sit amet, bibendum hendrerit ante. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Donec luctus eget nulla sit amet efficitur. Aliquam gravida laoreet magna quis pulvinar. In non pulvinar mauris. Ut risus turpis, ultrices eget ligula quis, tincidunt elementum dui. Vivamus vel neque vel dolor viverra bibendum. Donec ac ultricies ante, nec porttitor ipsum. Nunc id nisl commodo eros scelerisque auctor. Nam enim nisl, scelerisque ac ultricies in, vulputate a neque. Fusce enim quam, placerat et vulputate in, eleifend id odio.
-
-                Suspendisse potenti. Nullam tristique sagittis eros, a ultrices erat posuere id. Nam sit amet orci dignissim, elementum turpis eget, consectetur libero. Donec rhoncus semper lacus a rhoncus. Curabitur in elementum purus. Vestibulum eget iaculis nisi, aliquet semper lorem. Suspendisse in nulla vulputate, tempus nunc a, posuere diam. Vivamus at elit et turpis gravida vehicula pellentesque molestie enim. Cras elit lorem, mollis eget dapibus placerat, maximus eget risus. Nunc sit amet quam odio. Sed non ex libero. Vestibulum augue magna, auctor ac dui nec, placerat pharetra neque.
-
-                Quisque eu risus consequat ligula egestas tincidunt. Sed porta ultrices quam, vel vulputate magna. Maecenas laoreet sed dolor sed vulputate. Ut scelerisque rutrum arcu id feugiat. Ut quis lectus ut tortor efficitur rutrum. Fusce lobortis fringilla sodales. Morbi malesuada, odio pulvinar ornare aliquet, purus nisl aliquam nunc, at lacinia dolor nisi ac nibh. Donec scelerisque, turpis nec tempus finibus, tortor metus lobortis risus, non molestie lectus dui a erat. Suspendisse viverra, arcu ac mattis dapibus, urna risus interdum nisi, ut tempor metus quam sit amet leo. Nunc eget eros malesuada, efficitur nibh sit amet, bibendum nunc. Donec accumsan consectetur massa, ac semper elit auctor vitae.
-
-                Aliquam gravida odio eget dolor tristique rhoncus. Vestibulum tristique semper neque ac condimentum. Morbi rutrum, sapien vitae mollis scelerisque, orci nunc blandit felis, vel vestibulum nunc diam a dui. Maecenas id ultricies velit. Duis tincidunt ipsum a diam imperdiet porttitor. Sed sit amet odio justo. Morbi dolor libero, egestas non nisl ut, finibus mattis est. Donec eleifend ullamcorper accumsan. In hac habitasse platea dictumst. Quisque maximus vitae ex in laoreet. Maecenas nec nibh erat
-
-
-
+                MakeGPT streamlines the process of building OpenAI (LLM, ChatGPT) based
+                applications by providing you with fully managed, production-grade
+                software and infrastructure. This allows seamless integration of your
+                data with ChatGPT, regardless of your specific use case.
             </Text>
+            <Text>
+                To get started with MakeGPT, follow the steps outlined in this typical
+                workflow guide:
+            </Text>
+            <UL
+                items={[
+                    <Text>
+                        <strong> Idea conception</strong>: Begin by conceptualizing the idea
+                        you want to experiment with using OpenAI LLM models, such as
+                        ChatGPT.Identify the data sources, such as blogs or documents, that
+                        you want the AI to analyze, summarize, understand, and provide
+                        recommendations based on.
+                    </Text>,
+                    <Text>
+                        <strong> Sign up or log in</strong>: Visit MakeGPT and either create
+                        an account or log in to your existing account.
+                    </Text>,
+                    <Text>
+                        <strong> Access the dashboard</strong>: Once logged in, navigate to
+                        the dashboard.
+                    </Text>,
+                    <Text>
+                        <strong> Create a new stack</strong>: Click the {'"'}Create a stack
+                        {'"'} button to open a panel where you can enter your stack{"'"}s
+                        name, description, and type. Select the desired stack type from the
+                        drop-down menu labeled {'"'}Stacks{'"'}.
+                    </Text>,
+                    <Text>
+                        <strong> Choose a stack type</strong>: It is recommended to choose a{' '}
+                        {'"'}stack_v...{'"'} type, as these stacks are provisioned within
+                        the MakeGPT cloud.The {'"'}stack_x...{'"'} types, which are
+                        provisioned on your AWS account, are currently in developer preview
+                        and not as stable.
+                    </Text>,
+                    <Text>
+                        <strong> Provision your stack</strong>: Click "Create" to begin
+                        provisioning your stack.This process typically takes about 5
+                        minutes.
+                    </Text>,
+                    <Text>
+                        <strong> Configure your stack</strong>: Once your stack is
+                        provisioned, configure it according to the stack - specific
+                        documentation provided.
+                    </Text>,
+                    <Text>
+                        <strong> Test your configuration</strong>: Click the {'"'}Try...
+                        {'"'} button to access a client connected to your stack.If
+                        configured correctly, you can start querying the system using the
+                        barebones ChatGPT.
+                    </Text>,
+                    <Text>
+                        <strong> Upload your data</strong>: Obtain the ingestion endpoint
+                        and push your data to it using a script written in any language.The
+                        expected request body format is provided in the stack - specific
+                        documentation.
+                    </Text>,
+                    <Text>
+                        <strong> Index your data</strong>: After uploading, your data will
+                        be indexed, either automatically or manually if you choose to
+                        trigger it.
+                    </Text>,
+                    <Text>
+                        <strong> Use ChatGPT with your data</strong>: With the data indexed,
+                        you can now use ChatGPT to analyze and provide insights based on
+                        your specific data.
+                    </Text>,
+                    <Text>
+                        <strong> Integrate with your application</strong>: Use the provided
+                        client endpoint to query your version of ChatGPT and integrate its
+                        capabilities into your application.
+                    </Text>,
+                ]}
+            />
         </section>
     )
 }
