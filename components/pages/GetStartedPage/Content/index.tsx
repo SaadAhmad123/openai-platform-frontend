@@ -1,4 +1,5 @@
 import TypicalWorkflow from './TypicalWorkflow'
+import UploadingData from './UploadingData'
 import WhatIsStack from './WhatIsStack'
 import { GetStartedContent, IContentComponent } from './types'
 
@@ -39,6 +40,13 @@ registerGetStartedContent({
   labelIndex: '2',
   Component: WhatIsStack,
   link: 'what-is-stack',
+})
+
+registerGetStartedContent({
+  label: 'Uploading Data',
+  labelIndex: '3',
+  Component: UploadingData,
+  link: 'uploading-data',
 })
 
 export default content

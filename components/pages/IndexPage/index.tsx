@@ -150,6 +150,58 @@ const IndexPage = () => {
       </div>
       <Separator padding={36} />
       <div>
+        <h1 className="text-4xl font-bold">What can you make now?</h1>
+        <Separator padding={16} />
+        <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4">
+          {[
+            {
+              heading: 'Content-Savvy Assistant',
+              content:
+                'MakeGPT understands your content and documents, enabling it to answer questions based on the information within your resources.',
+            },
+            {
+              heading: 'Recommendation Bot',
+              content:
+                "Leverage MakeGPT's knowledge of your content to suggest solutions and plans in reference to your documents, streamlining decision-making processes.",
+            },
+            {
+              heading: 'Chatbot Integration',
+              content:
+                'Connect MakeGPT to chat services like Twilio, providing assistance to your end-users while allowing you to monitor conversations.',
+            },
+            {
+              heading: 'Service Integration',
+              content:
+                'In the future, MakeGPT will be able to connect to your existing services, such as user directories and search engines, enhancing its capability to answer queries.',
+            },
+            {
+              heading: 'Memory and Personalization',
+              content:
+                'MakeGPT will eventually remember your conversations, forming a personal bond and developing a unique personality tailored to your preferences (coming in future updates).',
+            },
+            {
+              heading: 'Documentation-Specific Chatbot',
+              content:
+                'Deploy MakeGPT as a chatbot specific to your website or documentation, delivering customized assistance to your users.',
+            },
+            {
+              heading: 'And More',
+              content:
+                "MakeGPT's potential is vast, and I'm continually working on expanding its capabilities to better serve your needs.",
+            },
+          ].map(({ heading, content }, index) => (
+            <InfoTile key={index}>
+              <h1>
+                <strong>{heading}</strong>
+              </h1>
+              <Separator />
+              <p>{content}</p>
+            </InfoTile>
+          ))}
+        </div>
+      </div>
+      <Separator padding={36} />
+      <div>
         <h1 className="text-4xl font-bold">What MakeGPT allows you to do?</h1>
         <Separator padding={16} />
         <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4">
