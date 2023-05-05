@@ -18,7 +18,7 @@ const GetStartedPage = () => {
       </p>
       <Separator padding={16} />
       <div className="grid md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
-        <Navigation contentList={content} onClickLink={(item) => { }} />
+        <Navigation contentList={content} onClickLink={(item) => {}} />
         <div className="md:col-span-2 lg:col-span-3 xl:col-span-4">
           {content.map((item, index) => (
             <React.Fragment key={index}>

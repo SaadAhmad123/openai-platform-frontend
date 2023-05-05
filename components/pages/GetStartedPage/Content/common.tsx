@@ -14,11 +14,11 @@ export const Text: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     )
 }
 
-export const UL: React.FC<{ items: React.ReactNode[] }> = ({ items }) => {
+export const UL: React.FC<{ items: (() => JSX.Element)[] }> = ({ items }) => {
     return (
-        <ul className='list-disc px-4'>
-            {items.map((item, index) => (
-                <li key={index}>{item}</li>
+        <ul className="list-disc px-4">
+            {items.map((Item, index) => (
+                <li key={index}><Item /></li>
             ))}
         </ul>
     )
