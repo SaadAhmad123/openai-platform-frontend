@@ -81,11 +81,18 @@ const KnowMorePage = () => {
             onClick: () => router.push('/get-started'),
           },
           {
-            title: 'Under the hood',
+            title: 'Try MakeGPT Assistant',
             description:
-              'Discover the high-level architecture that powers MakeGPT, and gain a deeper understanding of the underlying technology that drives it.',
-            onClick: () => router.push('/under-the-hood'),
+              "The MakeGPT Assistant, built using the power of MakeGPT, is designed to help you access relevant information and provide tailored assistance. To explore the capabilities of the MakeGPT Assistant, simply open it.",
+            onClick: () => window?.open?.("https://mgpt-client.saad-ahmad.com/?socket=wss://u3qjcorbuf.execute-api.ap-southeast-2.amazonaws.com/prod&name=MakeGPT&prompt_type=default", "_blank"),
           },
+          {
+            title: 'Terms and Conditions',
+            description:
+              "Please take a moment to review MakeGPT's Terms and Conditions by clicking here. It is important to understand the guidelines and requirements for using this service.",
+            onClick: () => router.push('/terms-and-conditions'),
+          },
+
         ].map((item, index) => (
           <InfoTile key={index} onClick={item.onClick}>
             <h1 className="text-2xl font-bold">{item.title}</h1>

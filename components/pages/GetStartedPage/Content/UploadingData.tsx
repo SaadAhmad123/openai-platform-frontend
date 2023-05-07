@@ -26,17 +26,43 @@ function UploadingData({ link }: IContentComponent) {
         </Text>
         <Separator />
         <CodeMirror
-          value={`
-{
-  uuid: string,
-  urls: Array<string>,
-  headings: Array<string>,
-  paragraph: string,
-  tokens: number,       // Optional, if you don't want the endpoint to calculate tokens, leave this empty for now
-  embeddings: number[], // Optional, if you don't want the endpoint to calculate embeddings, leave this empty for now
-}
-                    `.trim()}
-          height="160px"
+          value={JSON.stringify(
+            {
+              type: 'object',
+              properties: {
+                uuid: { type: 'string' },
+                urls: {
+                  type: 'array',
+                  items: {
+                    type: 'string',
+                  },
+                },
+                headings: {
+                  type: 'array',
+                  items: {
+                    type: 'string',
+                  },
+                },
+                paragraph: { type: 'string' },
+                tokens: {
+                  type: 'number',
+                  description:
+                    "Optional, if you don't want the endpoint to calculate tokens, leave this empty for now",
+                },
+                embeddings: {
+                  type: 'array',
+                  description:
+                    "Optional, if you don't want the endpoint to calculate embeddings, leave this empty for now",
+                  items: {
+                    type: 'number',
+                  },
+                },
+              },
+            },
+            null,
+            2,
+          )}
+          height="300px"
           extensions={[javascript({ typescript: true })]}
           theme={xcodeDark}
           editable={false}
@@ -51,18 +77,26 @@ function UploadingData({ link }: IContentComponent) {
         <Separator />
         <div>
           <CodeMirror
-            value={`
-{
-  timeElapsedMS: {
-    tokenizer: number,
-    embedding_calculator: number,
-    index_update: number,
-    clean_up: number
-  },
-  tokens: number,   // Tokens represent the content size as seen by the LLM models
-  embeddings: number[] // The system uses embeddings to fetch relevant context data for querying OpenAI LLMs
-}
-                    `.trim()}
+            value={JSON.stringify(
+              {
+                type: 'object',
+                properties: {
+                  timeElapsedMS: {
+                    type: 'object',
+                    properties: {
+                      tokenizer: { type: 'number' },
+                      embedding_calculator: { type: 'number' },
+                      index_update: { type: 'number' },
+                      clean_up: { type: 'number' },
+                    },
+                  },
+                  tokens: { type: 'number' },
+                  embeddings: { type: 'number' },
+                },
+              },
+              null,
+              2,
+            )}
             height="200px"
             extensions={[javascript({ typescript: true })]}
             theme={xcodeDark}
