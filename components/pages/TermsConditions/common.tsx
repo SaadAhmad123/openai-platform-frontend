@@ -1,5 +1,5 @@
 import React from 'react'
-import Separator from '../../../Separator'
+import Separator from '../../Separator'
 import CodeMirror from '@uiw/react-codemirror'
 import { javascript } from '@codemirror/lang-javascript'
 import { xcodeDark } from '@uiw/codemirror-theme-xcode'

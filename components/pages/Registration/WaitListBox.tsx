@@ -5,6 +5,7 @@ import Separator from '../../Separator'
 import { HomePageActionButton } from '../../Buttons'
 import useSegment from '../../../hooks/useSegment'
 import onMount from '../../../hooks/onMount'
+import Link from 'next/link'
 
 const WaitListBox = () => {
   const segment = useSegment()
@@ -37,6 +38,12 @@ const WaitListBox = () => {
         >
           <HomePageActionButton text="Registration Form" />
         </a>
+        <Separator padding={10} />
+        <p className='text-sm'>
+          Upon expressing your interest in registering, you kindly acknowledge and accept the <Link className='underline' href={"/terms-and-conditions"}>
+            Terms and conditions
+          </Link> associated with MakeGPT service.
+        </p>
       </RegistrationBox>
     </Layout>
   )
