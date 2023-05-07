@@ -1,3 +1,5 @@
+import ConfiguringStack from './ConfiguringStack'
+import StackUsage from './StackUsage'
 import TypicalWorkflow from './TypicalWorkflow'
 import UploadingData from './UploadingData'
 import WhatIsStack from './WhatIsStack'
@@ -47,6 +49,20 @@ registerGetStartedContent({
   labelIndex: '3',
   Component: UploadingData,
   link: 'uploading-data',
+})
+
+registerGetStartedContent({
+  label: 'Configuring Your Stack',
+  labelIndex: '4',
+  Component: ConfiguringStack,
+  link: 'configuring-stack',
+})
+
+registerGetStartedContent({
+  label: 'Stack Testing and Usage',
+  labelIndex: '5',
+  Component: StackUsage,
+  link: 'stack-usage',
 })
 
 export default content
